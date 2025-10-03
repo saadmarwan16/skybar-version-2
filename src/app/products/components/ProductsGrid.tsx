@@ -1,58 +1,37 @@
+import Image from "next/image";
 import type { FunctionComponent } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { mockProducts } from "../data";
+import { useProductsStore } from "@/store/useProductsStore";
 
-interface ProductsGridProps {
-  searchTerm: string;
-  selectedCategory: string;
-  selectedCountry: string;
-  setSelectedProduct: (product: (typeof mockProducts)[0] | null) => void;
-}
-
-const ProductsGrid: FunctionComponent<ProductsGridProps> = ({
-  searchTerm,
-  selectedCategory,
-  selectedCountry,
-  setSelectedProduct,
-}) => {
-  const filteredProducts = mockProducts.filter((product) => {
-    const matchesSearch =
-      product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "All Categories" ||
-      product.category === selectedCategory;
-    const matchesCountry =
-      selectedCountry === "All Countries" ||
-      product.exportFrom.includes(selectedCountry);
-
-    return matchesSearch && matchesCategory && matchesCountry;
-  });
+const ProductsGrid: FunctionComponent = () => {
+  const { results: products, updateSelectedProduct } = useProductsStore();
 
   return (
     <section className="py-16 bg-gradient-to-b from-background to-muted/30">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map((product) => (
+          {products.map((product) => (
             <Card
               key={product.id}
-              onClick={() => setSelectedProduct(product)}
-              className="group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border-2 border-border hover:border-primary/30 bg-card overflow-hidden cursor-pointer"
+              onClick={() => updateSelectedProduct(product)}
+              className="group hover:shadow-xl hover:-translate-y-2 transition-all gap-0 duration-300 border-1 py-0 border-border hover:border-primary/30 bg-card overflow-hidden cursor-pointer"
             >
               <div className="relative overflow-hidden">
-                <img
+                <Image
                   src={product.images[0]}
                   alt={product.title}
-                  className="w-full h-52 object-cover group-hover:scale-110 transition-transform duration-500"
+                  width={370}
+                  height={208}
+                  className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
 
-              <CardContent className="p-6 space-y-4">
+              <CardContent className="p-6 space-y-4 pt-2">
                 {/* Title */}
-                <h3 className="text-xl font-heading font-bold text-foreground group-hover:text-primary transition-colors min-h-[3.5rem] flex items-center">
+                <h3 className="text-xl font-heading font-bold text-foreground group-hover:text-primary transition-colors min-h-[3.5rem] flex items-center mb-0">
                   {product.title}
                 </h3>
 
@@ -103,7 +82,7 @@ const ProductsGrid: FunctionComponent<ProductsGridProps> = ({
           ))}
         </div>
 
-        {filteredProducts.length === 0 && (
+        {products.length === 0 && (
           <div className="text-center py-12">
             <p className="text-muted-foreground text-lg">
               No products found matching your criteria.

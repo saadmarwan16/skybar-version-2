@@ -76,7 +76,10 @@ const NativeSelect = React.forwardRef<HTMLDivElement, NativeSelectProps>(
 
         {isOpen && (
           <div className="absolute top-full z-[9999] mt-1 w-full rounded-md border border-border bg-popover shadow-lg animate-in fade-in-0 zoom-in-95">
-            <div className="p-1 max-h-60 overflow-auto" role="listbox">
+            <div
+              className="p-1 max-h-60 overflow-auto bg-background rounded-md"
+              role="listbox"
+            >
               {options.map((option) => (
                 <div
                   key={option.value}
