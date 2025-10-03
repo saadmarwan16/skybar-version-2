@@ -1,11 +1,14 @@
 "use client";
 
 import { Globe, Menu, X } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const navItems = [
     { name: "Home", href: "#home" },
@@ -19,6 +22,8 @@ const Navigation = () => {
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push(`/${href}`);
     }
     setIsOpen(false);
   };
@@ -49,17 +54,17 @@ const Navigation = () => {
                 key={item.name}
                 type="button"
                 onClick={() => scrollToSection(item.href)}
-                className="font-body text-foreground hover:text-primary transition-colors font-medium"
+                className="text-navy-blue hover:text-secondary transition-all duration-300 font-medium relative group"
               >
                 {item.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full"></span>
               </button>
             ))}
-            <Button
-              onClick={() => scrollToSection("#contact")}
-              className="bg-gradient-primary hover:opacity-90 text-primary-foreground font-heading font-semibold shadow-md"
-            >
-              Get Started
-            </Button>
+            <Link href="/products">
+              <Button className="bg-gradient-primary hover:opacity-90 text-primary-foreground font-heading font-semibold shadow-md">
+                View Products
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -81,17 +86,18 @@ const Navigation = () => {
                   key={item.name}
                   type="button"
                   onClick={() => scrollToSection(item.href)}
-                  className="block w-full text-left font-body text-foreground hover:text-primary transition-colors py-2"
+                  className="text-navy-blue hover:text-secondary transition-all duration-300 font-medium relative group"
                 >
                   {item.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full"></span>
                 </button>
               ))}
-              <Button
-                onClick={() => scrollToSection("#contact")}
-                className="w-full bg-gradient-primary hover:opacity-90 text-primary-foreground font-heading font-semibold mt-4"
-              >
-                Get Started
-              </Button>
+
+              <Link href="/products">
+                <Button className="w-full bg-gradient-primary hover:opacity-90 text-primary-foreground font-heading font-semibold mt-4">
+                  View Products
+                </Button>
+              </Link>
             </div>
           </div>
         )}

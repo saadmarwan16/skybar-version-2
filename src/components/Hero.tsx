@@ -1,4 +1,6 @@
-import { ArrowRight, Globe, Ship, TrendingUp } from "lucide-react";
+"use client";
+
+import { ArrowRight, Globe, Rocket, Ship, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
@@ -45,8 +47,8 @@ const Hero = () => {
               size="lg"
               className="border-2 border-white/30 text-foreground hover:bg-white/10 hover:text-white/90 hover:border-white/50 font-heading font-semibold px-8 py-4 text-lg backdrop-blur-sm"
             >
-              View Our Impact
-              <Globe className="ml-2 h-5 w-5" />
+              Get Started
+              <Rocket className="ml-2 h-5 w-5" />
             </Button>
           </div>
 

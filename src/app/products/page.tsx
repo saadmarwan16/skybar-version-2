@@ -1,6 +1,4 @@
 import type { FunctionComponent } from "react";
-import Footer from "@/components/Footer";
-import Navigation from "@/components/Navigation";
 import ProductsSuspense from "./components/ProductsSuspense";
 
 interface ProductsPageProps {
@@ -15,10 +13,7 @@ const Products: FunctionComponent<ProductsPageProps> = async (props) => {
   const searchParams = await props.searchParams;
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-
-      {/* Header Section */}
+    <>
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div
@@ -66,9 +61,7 @@ const Products: FunctionComponent<ProductsPageProps> = async (props) => {
         category={searchParams.category}
         country={searchParams.country}
       />
-
-      <Footer />
-    </div>
+    </>
   );
 };
 

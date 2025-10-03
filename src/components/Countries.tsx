@@ -1,3 +1,5 @@
+"use client";
+
 import { Building, MapPin, TrendingUp, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";

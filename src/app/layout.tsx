@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Montserrat, Open_Sans } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
+import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 
 const montserrat = Montserrat({
   variable: "--font-heading",
@@ -33,7 +35,11 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} ${openSans.variable} antialiased`}
       >
-        {children}
+        <div className="min-h-screen">
+          <Navigation />
+          {children}
+          <Footer />
+        </div>
         <Toaster />
       </body>
     </html>
