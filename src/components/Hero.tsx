@@ -4,9 +4,9 @@ import { ArrowRight, Globe, Rocket, Ship, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
-  const scrollToServices = () => {
-    const servicesSection = document.getElementById("services");
-    servicesSection?.scrollIntoView({ behavior: "smooth" });
+  const scrollToSection = (href: string) => {
+    const section = document.getElementById(href);
+    section?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -34,7 +34,7 @@ const Hero = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Button
-              onClick={scrollToServices}
+              onClick={() => scrollToSection("services")}
               size="lg"
               className="bg-secondary hover:bg-secondary-light text-secondary-foreground font-heading font-semibold px-8 py-4 text-lg shadow-gold transform hover:scale-105 transition-all duration-300"
             >
@@ -44,6 +44,7 @@ const Hero = () => {
 
             <Button
               variant="outline"
+              onClick={() => scrollToSection("contact")}
               size="lg"
               className="border-2 border-white/30 text-foreground hover:bg-white/10 hover:text-white/90 hover:border-white/50 font-heading font-semibold px-8 py-4 text-lg backdrop-blur-sm"
             >

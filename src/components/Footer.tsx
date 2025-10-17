@@ -1,6 +1,8 @@
 "use client";
 
 import {
+  ChevronRight,
+  Clock,
   Facebook,
   Globe,
   Linkedin,
@@ -13,35 +15,127 @@ import {
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  const footerSections = [
+  // const footerSections = [
+  //   {
+  //     title: "Services",
+  //     links: [
+  //       "Import & Export Solutions",
+  //       "Cargo Shipping & Logistics",
+  //       "Agricultural Machinery",
+  //       "Construction Materials",
+  //     ],
+  //   },
+  //   {
+  //     title: "Markets",
+  //     links: [
+  //       "Uganda",
+  //       "Kenya",
+  //       "Tanzania",
+  //       "DR Congo",
+  //       "South Sudan",
+  //       "Rwanda",
+  //     ],
+  //   },
+  //   {
+  //     title: "Company",
+  //     links: ["About Us", "Career Opportunities", "Partner Program"],
+  //   },
+  // ];
+
+  const footerQuickLinks = [
     {
-      title: "Services",
-      links: [
-        "Import & Export Solutions",
-        "Cargo Shipping & Logistics",
-        "Agricultural Machinery",
-        "Construction Materials",
+      name: "Home",
+      href: "home",
+    },
+    {
+      name: "About",
+      href: "about",
+    },
+    {
+      name: "Services",
+      href: "services",
+    },
+    {
+      name: "Countries",
+      href: "countries",
+    },
+    {
+      name: "Contact",
+      href: "contact",
+    },
+  ];
+
+  const footerContactUs = [
+    {
+      type: "address",
+      icon: MapPin,
+      value: [
+        {
+          name: "Aksaray Mahallesi Tiryaki",
+          link: undefined,
+        },
+        {
+          name: "Hasanpaşa Cad. No: 50 /2",
+          link: undefined,
+        },
+        {
+          name: "Fatih, Istanbul, Turkey",
+          link: undefined,
+        },
       ],
     },
     {
-      title: "Markets",
-      links: [
-        "Uganda",
-        "Kenya",
-        "Tanzania",
-        "DR Congo",
-        "South Sudan",
-        "Rwanda",
+      type: "phone",
+      icon: Phone,
+      value: [
+        {
+          name: "+90 551 895 46 15",
+          link: "tel:+905518954615",
+        },
+        {
+          name: "+90 553 161 19 86",
+          link: "tel:+905531611986",
+        },
+        {
+          name: "+90 531 725 50 65",
+          link: "tel:+905317255065",
+        },
       ],
     },
     {
-      title: "Company",
-      links: ["About Us", "Career Opportunities", "Partner Program"],
+      type: "email",
+      icon: Mail,
+      value: [
+        {
+          name: "info@skybar-trade.com",
+          link: "mailto:info@skybar-trade.com",
+        },
+        {
+          name: "sales@skybar-trade.com",
+          link: "mailto:sales@skybar-trade.com",
+        },
+      ],
+    },
+  ];
+
+  const footerBusinessHours = [
+    {
+      day: "Monday - Friday",
+      hours: "9:00 AM - 6:00 PM",
+    },
+    {
+      day: "Saturday",
+      hours: "10:00 AM - 4:00 PM",
+    },
+    {
+      day: "Sunday",
+      hours: "Closed",
     },
   ];
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
+    console.log("Section id:", sectionId, element);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
@@ -96,8 +190,82 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Footer Sections */}
-          {footerSections.map((section) => (
+          <div>
+            <h4 className="font-heading text-lg font-semibold mb-4 text-secondary">
+              Quick Links
+            </h4>
+            <ul className="flex flex-col gap-4">
+              {footerQuickLinks.map((link) => (
+                <li key={link.name}>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection(link.href)}
+                    className="font-body text-sm text-primary-foreground/80 hover:text-secondary transition-colors flex items-center gap-3"
+                  >
+                    <ChevronRight className="h-4 w-4 flex-shrink-0" />
+                    {link.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-heading text-lg font-semibold mb-4 text-secondary">
+              Contact Us
+            </h4>
+            <div className="space-y-3">
+              {footerContactUs.map((item) => (
+                <div key={item.type} className="flex space-x-2">
+                  <item.icon className="h-4 w-4 text-secondary flex-shrink-0 mt-1" />
+                  <ul className="space-y-1">
+                    {item.value.map((detail) => (
+                      <>
+                        {item.type === "address" ? (
+                          <li
+                            key={detail.name}
+                            className="font-body text-sm text-primary-foreground/80"
+                          >
+                            {detail.name}
+                          </li>
+                        ) : (
+                          <li
+                            key={detail.name}
+                            className="font-body text-sm text-primary-foreground/80 hover:text-secondary transition-colors"
+                          >
+                            <a href={detail.link}>{detail.name}</a>
+                          </li>
+                        )}
+                      </>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h4 className="font-heading text-lg font-semibold mb-4 text-secondary">
+              Business Hours
+            </h4>
+            <div className="space-y-3">
+              {footerBusinessHours.map((item) => (
+                <div key={item.day} className="flex space-x-2">
+                  <Clock className="h-4 w-4 text-secondary flex-shrink-0 mt-2" />
+                  <ul className="space-y-1">
+                    <li className="font-body text-base md:text-lg text-primary-foreground/80">
+                      {item.day}
+                    </li>
+                    <li className="font-body text-sm text-primary-foreground/80">
+                      {item.hours}
+                    </li>
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* {footerSections.map((section) => (
             <div key={section.title}>
               <h4 className="font-heading text-lg font-semibold mb-4 text-secondary">
                 {section.title}
@@ -124,7 +292,7 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
 
