@@ -1,87 +1,75 @@
 "use client";
 
-import {
-  Building,
-  Clock,
-  Globe,
-  Mail,
-  MapPin,
-  MessageSquare,
-  Phone,
-  Send,
-} from "lucide-react";
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Clock, Mail, MapPin, MessageSquare, Phone, Send } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { AnimatedSection } from "@/hooks/useScrollAnimation";
 
+const contactFormSchema = z.object({
+  name: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name is too long"),
+  email: z.email("Invalid email address"),
+  phone: z.string().optional(),
+  company: z.string().optional(),
+  country: z.string().optional(),
+  message: z
+    .string()
+    .min(10, "Message must be at least 10 characters")
+    .max(1000, "Message is too long"),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
+
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
-    country: "",
-    message: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    mode: "onBlur",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
+  const onSubmit = async (data: ContactFormData) => {
     // Simulate form submission
-    setTimeout(() => {
-      //   toast({
-      //     title: "Message Sent Successfully!",
-      //     description:
-      //       "Thank you for your interest. Our team will contact you within 24 hours to discuss your international trade needs.",
-      //   });
-      toast("Message Sent Successfully!", {
-        description:
-          "Thank you for your interest. Our team will contact you within 24 hours to discuss your international trade needs.",
-        action: {
-          label: "Undo",
-          onClick: () => console.log("Undo"),
-        },
-      });
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        company: "",
-        country: "",
-        message: "",
-      });
-      setIsSubmitting(false);
-    }, 1000);
+    toast("Message Sent Successfully!", {
+      description:
+        "Thank you for your interest. Our team will contact you within 24 hours to discuss your international trade needs.",
+      action: {
+        label: "Undo",
+        onClick: () => console.log("Undo"),
+      },
+    });
+
+    reset();
   };
 
   const contactInfo = [
     {
-      icon: Building,
-      title: "Headquarters",
-      details: ["Skybar Dış Ticaret Limited Şirketi", "Istanbul, Turkey"],
+      icon: MapPin,
+      title: "Location",
+      details: [
+        "Aksaray Mahallesi Tiryaki",
+        "Hasanpaşa Cad. No: 50 /2",
+        "Fatih, Istanbul, Turkey",
+      ],
       color: "text-primary",
     },
     {
       icon: Phone,
       title: "Phone",
-      details: ["+90 (212) XXX-XXXX", "Available 24/7"],
+      details: ["+90 551 895 46 15", "Available 24/7"],
       color: "text-secondary",
     },
     {
@@ -94,8 +82,8 @@ const Contact = () => {
       icon: Clock,
       title: "Business Hours",
       details: [
-        "Monday - Friday: 8:00 AM - 6:00 PM",
-        "Saturday: 9:00 AM - 2:00 PM (GMT+3)",
+        "Monday - Friday: 9:00 AM - 6:00 PM",
+        "Saturday: 10:00 AM - 4:00 PM",
       ],
       color: "text-secondary",
     },
@@ -132,7 +120,7 @@ const Contact = () => {
                     </h3>
                   </div>
 
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <label
@@ -143,13 +131,17 @@ const Contact = () => {
                         </label>
                         <Input
                           id="full-name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleInputChange}
+                          {...register("name")}
                           placeholder="Your full name"
-                          required
-                          className="w-full"
+                          className={`w-full ${
+                            errors.name ? "border-destructive" : ""
+                          }`}
                         />
+                        {errors.name && (
+                          <p className="text-sm text-destructive mt-1">
+                            {errors.name.message}
+                          </p>
+                        )}
                       </div>
                       <div>
                         <label
@@ -161,13 +153,17 @@ const Contact = () => {
                         <Input
                           id="email"
                           type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
+                          {...register("email")}
                           placeholder="your@email.com"
-                          required
-                          className="w-full"
+                          className={`w-full ${
+                            errors.email ? "border-destructive" : ""
+                          }`}
                         />
+                        {errors.email && (
+                          <p className="text-sm text-destructive mt-1">
+                            {errors.email.message}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -181,12 +177,17 @@ const Contact = () => {
                         </label>
                         <Input
                           id="phone-number"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
+                          {...register("phone")}
                           placeholder="+1 (555) 123-4567"
-                          className="w-full"
+                          className={`w-full ${
+                            errors.phone ? "border-destructive" : ""
+                          }`}
                         />
+                        {errors.phone && (
+                          <p className="text-sm text-destructive mt-1">
+                            {errors.phone.message}
+                          </p>
+                        )}
                       </div>
                       <div>
                         <label
@@ -197,12 +198,17 @@ const Contact = () => {
                         </label>
                         <Input
                           id="company-name"
-                          name="company"
-                          value={formData.company}
-                          onChange={handleInputChange}
+                          {...register("company")}
                           placeholder="Your company"
-                          className="w-full"
+                          className={`w-full ${
+                            errors.company ? "border-destructive" : ""
+                          }`}
                         />
+                        {errors.company && (
+                          <p className="text-sm text-destructive mt-1">
+                            {errors.company.message}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -215,12 +221,17 @@ const Contact = () => {
                       </label>
                       <Input
                         id="country"
-                        name="country"
-                        value={formData.country}
-                        onChange={handleInputChange}
+                        {...register("country")}
                         placeholder="Your country or region"
-                        className="w-full"
+                        className={`w-full ${
+                          errors.country ? "border-destructive" : ""
+                        }`}
                       />
+                      {errors.country && (
+                        <p className="text-sm text-destructive mt-1">
+                          {errors.country.message}
+                        </p>
+                      )}
                     </div>
 
                     <div>
@@ -232,14 +243,18 @@ const Contact = () => {
                       </label>
                       <Textarea
                         id="message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleInputChange}
+                        {...register("message")}
                         placeholder="Tell us about your international trade requirements, products of interest, or any specific questions you have..."
-                        required
                         rows={5}
-                        className="w-full resize-none"
+                        className={`w-full resize-none ${
+                          errors.message ? "border-destructive" : ""
+                        }`}
                       />
+                      {errors.message && (
+                        <p className="text-sm text-destructive mt-1">
+                          {errors.message.message}
+                        </p>
+                      )}
                     </div>
 
                     <Button
@@ -295,56 +310,9 @@ const Contact = () => {
                   </Card>
                 </AnimatedSection>
               ))}
-
-              {/* Map Placeholder */}
-              <AnimatedSection animation="scale-in" delay={600}>
-                <Card className="border-border/50">
-                  <CardContent className="p-6">
-                    <div className="flex items-center mb-4">
-                      <div className="p-3 bg-gradient-gold rounded-lg mr-4">
-                        <MapPin className="h-6 w-6 text-secondary-foreground" />
-                      </div>
-                      <h4 className="font-heading text-lg font-semibold text-primary">
-                        Our Location
-                      </h4>
-                    </div>
-                    <div className="bg-accent/50 rounded-lg p-8 text-center">
-                      <Globe className="h-12 w-12 text-secondary mx-auto mb-4" />
-                      <p className="font-body text-muted-foreground">
-                        Located in the heart of Istanbul, Turkey's commercial
-                        center, strategically positioned for international trade
-                        operations.
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
             </div>
           </AnimatedSection>
         </div>
-
-        {/* Bottom CTA */}
-        <AnimatedSection animation="fade-up" delay={800}>
-          <div className="mt-16 text-center">
-            <div className="bg-gradient-gold p-8 rounded-2xl text-secondary-foreground max-w-4xl mx-auto">
-              <h3 className="font-heading text-2xl font-semibold mb-4">
-                Ready to Start Your International Trade Journey?
-              </h3>
-              <p className="font-body mb-6 leading-relaxed opacity-90">
-                Join the growing network of successful businesses that trust
-                Skybar for their international trade needs. Let's explore the
-                opportunities together.
-              </p>
-              <Button
-                size="lg"
-                className="bg-primary hover:bg-primary-dark text-primary-foreground font-heading font-semibold shadow-lg"
-              >
-                Schedule Free Consultation
-                <Phone className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-          </div>
-        </AnimatedSection>
       </div>
     </section>
   );

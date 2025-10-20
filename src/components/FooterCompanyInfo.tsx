@@ -1,13 +1,12 @@
-import { Facebook, Globe, Linkedin, Twitter } from "lucide-react";
+import { Facebook, Linkedin, Twitter } from "lucide-react";
+import Image from "next/image";
 import type { FunctionComponent } from "react";
 
 const FooterCompanyInfo: FunctionComponent = () => {
   return (
     <div className="lg:col-span-2">
       <div className="flex items-center mb-6">
-        <div className="p-2 bg-secondary rounded-lg mr-3">
-          <Globe className="h-6 w-6 text-secondary-foreground" />
-        </div>
+        <Image src="/white-logo.png" alt="White Logo" width={36} height={36} />
         <div>
           <h3 className="font-heading text-xl font-bold">Skybar Dış Ticaret</h3>
           <p className="font-body text-sm text-primary-foreground/80">

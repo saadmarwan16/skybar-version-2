@@ -1,6 +1,7 @@
 "use client";
 
-import { Globe, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -34,9 +35,12 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="p-2 bg-gradient-primary rounded-lg mr-3">
-              <Globe className="h-6 w-6 text-primary-foreground" />
-            </div>
+            <Image
+              src="/navy-blue-logo.png"
+              alt="Navy Blue Logo"
+              width={36}
+              height={36}
+            />
             <div>
               <h1 className="font-heading text-lg font-bold text-primary">
                 Skybar Dış Ticaret
