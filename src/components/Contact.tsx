@@ -1,5 +1,6 @@
 "use client";
 
+import emailjs from "@emailjs/browser";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Clock, Mail, MapPin, MessageSquare, Phone, Send } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -40,19 +41,44 @@ const Contact = () => {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const serviceId = process.env.NEXT_PUBLIC_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_KEY;
 
-    toast("Message Sent Successfully!", {
-      description:
-        "Thank you for your interest. Our team will contact you within 24 hours to discuss your international trade needs.",
-      action: {
-        label: "Undo",
-        onClick: () => console.log("Undo"),
-      },
-    });
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error("EmailJS configuration is missing");
+      }
 
-    reset();
+      // Send email using EmailJS
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          name: data.name,
+          email: data.email,
+          phone: data.phone || "Not provided",
+          company: data.company || "Not provided",
+          country: data.country || "Not provided",
+          message: data.message,
+        },
+        {
+          publicKey,
+        }
+      );
+
+      toast.success("Message Sent Successfully!", {
+        description:
+          "Thank you for your interest. Our team will contact you within 24 hours to discuss your international trade needs.",
+      });
+
+      reset();
+    } catch (_) {
+      toast.error("Failed to Send Message", {
+        description:
+          "We're sorry, but there was an error sending your message. Please try again or contact us directly.",
+      });
+    }
   };
 
   const contactInfo = [
