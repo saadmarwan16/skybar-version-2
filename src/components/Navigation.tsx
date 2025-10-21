@@ -36,7 +36,7 @@ const Navigation = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Image
-              src="/navy-blue-logo.png"
+              src="/logos/navy-blue-logo.png"
               alt="Navy Blue Logo"
               width={36}
               height={36}
