@@ -1,9 +1,9 @@
 "use client";
 
-import FooterBusinessHours from "./FooterBusinessHours";
-import FooterCompanyInfo from "./FooterCompanyInfo";
-import FooterContactUs from "./FooterContactUs";
-import FooterQuickLinks from "./FooterQuickLinks";
+import FooterBusinessHours from "./footer/FooterBusinessHours";
+import FooterCompanyInfo from "./footer/FooterCompanyInfo";
+import FooterContactUs from "./footer/FooterContactUs";
+import FooterQuickLinks from "./footer/FooterQuickLinks";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
