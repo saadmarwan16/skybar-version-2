@@ -5,12 +5,12 @@ import type { FunctionComponent } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { fields } from "@/lib/formFields";
 import {
   type ContactFormData,
   contactFormSchema,
 } from "@/schemas/contactFormSchema";
+import FormField from "./FormField";
 
 const ContactForm: FunctionComponent = () => {
   const {
@@ -33,7 +33,6 @@ const ContactForm: FunctionComponent = () => {
         throw new Error("EmailJS configuration is missing");
       }
 
-      // Send email using EmailJS
       await emailjs.send(
         serviceId,
         templateId,
@@ -45,16 +44,13 @@ const ContactForm: FunctionComponent = () => {
           country: data.country || "Not provided",
           message: data.message,
         },
-        {
-          publicKey,
-        },
+        { publicKey },
       );
 
       toast.success("Message Sent Successfully!", {
         description:
           "Thank you for your interest. Our team will contact you within 24 hours to discuss your international trade needs.",
       });
-
       reset();
     } catch (_) {
       toast.error("Failed to Send Message", {
@@ -67,130 +63,46 @@ const ContactForm: FunctionComponent = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label
-            htmlFor="full-name"
-            className="font-body text-sm font-medium text-foreground mb-2 block"
-          >
-            Full Name *
-          </label>
-          <Input
-            id="full-name"
-            {...register("name")}
-            placeholder="Your full name"
-            className={`w-full ${errors.name ? "border-destructive" : ""}`}
+        {fields.slice(0, 2).map((field) => (
+          <FormField
+            key={field.id}
+            {...field}
+            register={register}
+            errors={errors}
           />
-          {errors.name && (
-            <p className="text-sm text-destructive mt-1">
-              {errors.name.message}
-            </p>
-          )}
-        </div>
-        <div>
-          <label
-            htmlFor="email"
-            className="font-body text-sm font-medium text-foreground mb-2 block"
-          >
-            Email Address *
-          </label>
-          <Input
-            id="email"
-            type="email"
-            {...register("email")}
-            placeholder="your@email.com"
-            className={`w-full ${errors.email ? "border-destructive" : ""}`}
-          />
-          {errors.email && (
-            <p className="text-sm text-destructive mt-1">
-              {errors.email.message}
-            </p>
-          )}
-        </div>
+        ))}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label
-            htmlFor="phone-number"
-            className="font-body text-sm font-medium text-foreground mb-2 block"
-          >
-            Phone Number
-          </label>
-          <Input
-            id="phone-number"
-            {...register("phone")}
-            placeholder="+1 (555) 123-4567"
-            className={`w-full ${errors.phone ? "border-destructive" : ""}`}
+        {fields.slice(2, 4).map((field) => (
+          <FormField
+            key={field.id}
+            {...field}
+            register={register}
+            errors={errors}
           />
-          {errors.phone && (
-            <p className="text-sm text-destructive mt-1">
-              {errors.phone.message}
-            </p>
-          )}
-        </div>
-        <div>
-          <label
-            htmlFor="company-name"
-            className="font-body text-sm font-medium text-foreground mb-2 block"
-          >
-            Company Name
-          </label>
-          <Input
-            id="company-name"
-            {...register("company")}
-            placeholder="Your company"
-            className={`w-full ${errors.company ? "border-destructive" : ""}`}
-          />
-          {errors.company && (
-            <p className="text-sm text-destructive mt-1">
-              {errors.company.message}
-            </p>
-          )}
-        </div>
+        ))}
       </div>
 
-      <div>
-        <label
-          htmlFor="country"
-          className="font-body text-sm font-medium text-foreground mb-2 block"
-        >
-          Country/Region
-        </label>
-        <Input
-          id="country"
-          {...register("country")}
-          placeholder="Your country or region"
-          className={`w-full ${errors.country ? "border-destructive" : ""}`}
-        />
-        {errors.country && (
-          <p className="text-sm text-destructive mt-1">
-            {errors.country.message}
-          </p>
-        )}
-      </div>
+      <FormField
+        id="country"
+        label="Country/Region"
+        name="country"
+        placeholder="Your country or region"
+        register={register}
+        errors={errors}
+      />
 
-      <div>
-        <label
-          htmlFor="message"
-          className="font-body text-sm font-medium text-foreground mb-2 block"
-        >
-          Message *
-        </label>
-        <Textarea
-          id="message"
-          {...register("message")}
-          placeholder="Tell us about your international trade requirements, products of interest, or any specific questions you have..."
-          rows={5}
-          className={`w-full resize-none ${
-            errors.message ? "border-destructive" : ""
-          }`}
-        />
-        {errors.message && (
-          <p className="text-sm text-destructive mt-1">
-            {errors.message.message}
-          </p>
-        )}
-      </div>
+      <FormField
+        id="message"
+        label="Message"
+        name="message"
+        placeholder="Tell us about your international trade requirements, products of interest, or any specific questions you have..."
+        register={register}
+        errors={errors}
+        required
+        textarea
+      />
 
       <Button
         type="submit"
