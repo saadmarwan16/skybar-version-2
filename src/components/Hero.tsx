@@ -19,9 +19,9 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-overlay" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-container mx-auto px-6 text-center text-white">
+      <div className="relative z-10 max-w-container mx-auto px-6 text-center text-white py-32">
         <div className="animate-fade-in">
-          <h1 className="font-heading text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight">
             Connecting Turkish
             <span className="text-secondary block">Manufacturers</span>
             to the Global Market

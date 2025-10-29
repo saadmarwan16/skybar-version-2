@@ -85,17 +85,19 @@ const Navigation = () => {
         {isOpen && (
           <div className="lg:hidden py-4 border-t border-border/50">
             <div className="space-y-3">
-              {navItems.map((item) => (
-                <button
-                  key={item.name}
-                  type="button"
-                  onClick={() => scrollToSection(item.href)}
-                  className="text-navy-blue hover:text-secondary transition-all duration-300 font-medium relative group"
-                >
-                  {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full"></span>
-                </button>
-              ))}
+              <div className="flex flex-col gap-3 items-start">
+                {navItems.map((item) => (
+                  <button
+                    key={item.name}
+                    type="button"
+                    onClick={() => scrollToSection(item.href)}
+                    className="text-navy-blue hover:text-secondary transition-all duration-300 font-medium relative group"
+                  >
+                    {item.name}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full"></span>
+                  </button>
+                ))}
+              </div>
 
               <Link href="/products">
                 <Button className="w-full bg-gradient-primary hover:opacity-90 text-primary-foreground font-heading font-semibold mt-4">
