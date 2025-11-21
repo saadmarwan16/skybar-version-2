@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { mockProducts } from "@/app/products/data";
+import { mockProducts } from "@/app/(frontend)/products/data";
 
 interface IQuery {
   search: string;
