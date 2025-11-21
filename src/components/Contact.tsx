@@ -1,24 +1,28 @@
 "use client";
 
 import { MessageSquare } from "lucide-react";
+import type { FunctionComponent } from "react";
+import { contactInformationIcons } from "@/app/(frontend)/icons";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/hooks/useScrollAnimation";
-import { contactInfo } from "@/lib/contactInfo";
+import type { HomePage } from "@/payload-types";
 import ContactForm from "./contact/ContactForm";
 
-const Contact = () => {
+interface ContactProps {
+  contact: HomePage["contact"];
+}
+
+const Contact: FunctionComponent<ContactProps> = ({ contact }) => {
   return (
     <section id="contact" className="py-section bg-background">
       <div className="max-w-container mx-auto px-6">
         <AnimatedSection animation="fade-up">
           <div className="text-center mb-16">
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-primary mb-6">
-              Partner With Us Today
+              {contact.title}
             </h2>
             <p className="font-body text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Ready to expand your business across international markets? Get in
-              touch with our experienced team for customized trade solutions and
-              market insights.
+              {contact.subtitle}
             </p>
           </div>
         </AnimatedSection>
@@ -34,7 +38,7 @@ const Contact = () => {
                       <MessageSquare className="h-6 w-6 text-primary-foreground" />
                     </div>
                     <h3 className="font-heading text-2xl font-semibold text-primary">
-                      Get In Touch
+                      {contact["form-title"]}
                     </h3>
                   </div>
 
@@ -51,38 +55,54 @@ const Contact = () => {
                 Contact Information
               </h3>
 
-              {contactInfo.map((info, index) => (
-                <AnimatedSection
-                  key={info.title}
-                  animation="fade-up"
-                  delay={100 * index}
-                >
-                  <Card className="border-border/50 hover:shadow-md transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="flex items-start">
-                        <div
-                          className={`p-3 bg-accent rounded-lg mr-4 ${info.color}`}
-                        >
-                          <info.icon className="h-6 w-6" />
-                        </div>
-                        <div>
-                          <h4 className="font-heading text-lg font-semibold text-primary mb-2">
-                            {info.title}
-                          </h4>
-                          {info.details.map((detail) => (
+              {contact.items?.map((info, index) => {
+                const Icon = contactInformationIcons[info.icon];
+
+                return (
+                  <AnimatedSection
+                    key={info.title}
+                    animation="fade-up"
+                    delay={100 * index}
+                  >
+                    <Card className="border-border/50 hover:shadow-md transition-shadow">
+                      <CardContent className="p-6">
+                        <div className="flex items-start">
+                          <div
+                            className={`p-3 bg-accent rounded-lg mr-4 ${
+                              index % 2 === 0
+                                ? "text-primary"
+                                : "text-secondary"
+                            }`}
+                          >
+                            <Icon className="h-6 w-6" />
+                          </div>
+                          <div>
+                            <h4 className="font-heading text-lg font-semibold text-primary mb-2">
+                              {info.title}
+                            </h4>
+                            {/* {info.details.map((detail) => (
                             <p
                               key={detail}
                               className="font-body text-muted-foreground text-sm leading-relaxed"
                             >
                               {detail}
                             </p>
-                          ))}
+                          ))} */}
+                            <p className="font-body text-muted-foreground text-sm leading-relaxed">
+                              {info.contact}
+                            </p>
+                            {info.message && (
+                              <p className="font-body text-muted-foreground text-sm leading-relaxed">
+                                {info.message}
+                              </p>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </AnimatedSection>
-              ))}
+                      </CardContent>
+                    </Card>
+                  </AnimatedSection>
+                );
+              })}
             </div>
           </AnimatedSection>
         </div>

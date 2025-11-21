@@ -1,13 +1,27 @@
 "use client";
 
+import type { FunctionComponent } from "react";
 import { AnimatedSection } from "@/hooks/useScrollAnimation";
+import type { HomePage } from "@/payload-types";
 import CoreValues from "./about/CoreValues";
 import Mission from "./about/Mission";
 import Stats from "./about/Stats";
 import Vision from "./about/Vision";
 import WhyChooseUs from "./about/WhyChooseUs";
 
-const About = () => {
+interface AboutProps {
+  about: HomePage["about"];
+  values: HomePage["core-values"];
+  stats: HomePage["impact"];
+  why: HomePage["why"];
+}
+
+const About: FunctionComponent<AboutProps> = ({
+  about,
+  values,
+  stats,
+  why,
+}) => {
   return (
     <section className="py-section bg-background">
       <div className="max-w-container mx-auto px-6">
@@ -15,28 +29,25 @@ const About = () => {
         <AnimatedSection animation="fade-up">
           <div className="text-center mb-16">
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-primary mb-6">
-              About Skybar Dış Ticaret
+              {about.title}
             </h2>
             <p className="font-body text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
-              We are a premier international trade company based in Turkey,
-              specializing in connecting Turkish manufacturers with emerging
-              markets across East Africa. Our mission is to bridge continents
-              through strategic partnerships and reliable trade solutions.
+              {about.description}
             </p>
           </div>
         </AnimatedSection>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          <Vision />
+          <Vision vision={about.vision} />
 
-          <Mission />
+          <Mission mission={about.mission} />
         </div>
 
-        <CoreValues />
+        <CoreValues values={values} />
 
-        <Stats />
+        <Stats stats={stats} />
 
-        <WhyChooseUs />
+        <WhyChooseUs why={why} />
       </div>
     </section>
   );

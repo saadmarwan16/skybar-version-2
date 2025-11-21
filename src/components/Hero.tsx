@@ -1,9 +1,16 @@
 "use client";
 
 import { ArrowRight, Globe, Rocket, Ship, TrendingUp } from "lucide-react";
+import type { FunctionComponent } from "react";
+import { heroCardIcons } from "@/app/(frontend)/icons";
 import { Button } from "@/components/ui/button";
+import type { HomePage } from "@/payload-types";
 
-const Hero = () => {
+interface HeroProps {
+  hero: HomePage["hero"];
+}
+
+const Hero: FunctionComponent<HeroProps> = ({ hero }) => {
   const scrollToSection = (href: string) => {
     const section = document.getElementById(href);
     section?.scrollIntoView({ behavior: "smooth" });
@@ -22,14 +29,13 @@ const Hero = () => {
       <div className="relative z-10 max-w-container mx-auto px-6 text-center text-white py-32">
         <div className="animate-fade-in">
           <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            Connecting Turkish
-            <span className="text-secondary block">Manufacturers</span>
-            to the Global Market
+            {hero.title.prefix}
+            <span className="text-secondary block">{hero.title.infix}</span>
+            {hero.title.suffix}
           </h1>
 
           <p className="font-body text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed text-primary-foreground/90">
-            Seamless and reliable international trade solutions bridging Turkey
-            and East Africa with expertise, integrity, and innovative logistics.
+            {hero.subtitle}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -55,35 +61,20 @@ const Hero = () => {
 
           {/* Trust Indicators */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="flex flex-col items-center p-6 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
-              <Ship className="h-10 w-10 text-secondary mb-3" />
-              <h3 className="font-heading font-semibold text-lg mb-2">
-                Reliable Shipping
-              </h3>
-              <p className="text-sm text-primary-foreground/80">
-                Secure cargo delivery across continents
-              </p>
-            </div>
-
-            <div className="flex flex-col items-center p-6 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
-              <Globe className="h-10 w-10 text-secondary mb-3" />
-              <h3 className="font-heading font-semibold text-lg mb-2">
-                6 Countries Served
-              </h3>
-              <p className="text-sm text-primary-foreground/80">
-                Extensive East African network
-              </p>
-            </div>
-
-            <div className="flex flex-col items-center p-6 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
-              <TrendingUp className="h-10 w-10 text-secondary mb-3" />
-              <h3 className="font-heading font-semibold text-lg mb-2">
-                Proven Growth
-              </h3>
-              <p className="text-sm text-primary-foreground/80">
-                Connecting markets for mutual prosperity
-              </p>
-            </div>
+            {hero.card?.map((item) => (
+              <div
+                key={item.title}
+                className="flex flex-col items-center p-6 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20"
+              >
+                {heroCardIcons[item.icon as keyof typeof heroCardIcons]}
+                <h3 className="font-heading font-semibold text-lg mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-primary-foreground/80">
+                  {item.subtitle}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

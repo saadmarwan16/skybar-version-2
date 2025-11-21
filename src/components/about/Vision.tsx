@@ -3,7 +3,11 @@ import type { FunctionComponent } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/hooks/useScrollAnimation";
 
-const Vision: FunctionComponent = () => {
+interface VisionProps {
+  vision: string;
+}
+
+const Vision: FunctionComponent<VisionProps> = ({ vision }) => {
   return (
     <AnimatedSection animation="slide-left" delay={200}>
       <Card className="border-border/50 hover:shadow-md transition-shadow h-full">
@@ -17,9 +21,7 @@ const Vision: FunctionComponent = () => {
             </h3>
           </div>
           <p className="font-body text-muted-foreground leading-relaxed">
-            To become the leading bridge between Turkish innovation and African
-            opportunity, fostering sustainable economic growth and mutual
-            prosperity through strategic international trade partnerships.
+            {vision}
           </p>
         </CardContent>
       </Card>

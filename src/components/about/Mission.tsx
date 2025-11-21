@@ -3,7 +3,11 @@ import type { FunctionComponent } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/hooks/useScrollAnimation";
 
-const Mission: FunctionComponent = () => {
+interface MissionProps {
+  mission: string;
+}
+
+const Mission: FunctionComponent<MissionProps> = ({ mission }) => {
   return (
     <AnimatedSection animation="slide-right" delay={400}>
       <Card className="border-border/50 hover:shadow-md transition-shadow h-full">
@@ -17,9 +21,7 @@ const Mission: FunctionComponent = () => {
             </h3>
           </div>
           <p className="font-body text-muted-foreground leading-relaxed">
-            To provide seamless, integrated trade solutions that connect quality
-            Turkish products with East African markets, while ensuring
-            compliance, reliability, and value creation for all our partners.
+            {mission}
           </p>
         </CardContent>
       </Card>

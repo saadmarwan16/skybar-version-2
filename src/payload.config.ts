@@ -8,6 +8,7 @@ import { buildConfig } from "payload";
 import sharp from "sharp";
 import { Media } from "./collections/Media";
 import { Users } from "./collections/Users";
+import { HomePage } from "./globals/HomePage";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -20,6 +21,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media],
+  globals: [HomePage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

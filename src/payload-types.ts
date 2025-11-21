@@ -86,8 +86,12 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'home-page': HomePage;
+  };
+  globalsSelect: {
+    'home-page': HomePageSelect<false> | HomePageSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -311,6 +315,290 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page".
+ */
+export interface HomePage {
+  id: number;
+  hero: {
+    title: {
+      prefix: string;
+      infix: string;
+      suffix: string;
+    };
+    subtitle: string;
+    card?:
+      | {
+          title: string;
+          subtitle: string;
+          icon: 'ship' | 'globe' | 'growth';
+          id?: string | null;
+        }[]
+      | null;
+  };
+  about: {
+    title: string;
+    description: string;
+    mission: string;
+    vision: string;
+  };
+  'core-values': {
+    title: string;
+    values?:
+      | {
+          title: string;
+          description: string;
+          icon: 'shield' | 'globe' | 'handshake' | 'award';
+          id?: string | null;
+        }[]
+      | null;
+  };
+  impact: {
+    title: string;
+    stats?:
+      | {
+          value: string;
+          label: string;
+          subtitle?: string | null;
+          icon: 'users' | 'globe' | 'growth' | 'shield';
+          id?: string | null;
+        }[]
+      | null;
+  };
+  why: {
+    title: string;
+    highlights?:
+      | {
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  services: {
+    title: string;
+    subtitle: string;
+    items?:
+      | {
+          title: string;
+          description: string;
+          features?:
+            | {
+                value: string;
+                id?: string | null;
+              }[]
+            | null;
+          icon: 'ship' | 'container' | 'wrench' | 'building';
+          id?: string | null;
+        }[]
+      | null;
+  };
+  consultation: {
+    title: string;
+    description: string;
+  };
+  markets: {
+    title: string;
+    subtitle: string;
+    items?:
+      | {
+          country: string;
+          population: string;
+          'market-size': string;
+          opportunities: string;
+          highlights?:
+            | {
+                value: string;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  partnerships: {
+    title: string;
+    description: string;
+    items?:
+      | {
+          value: string;
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  contact: {
+    title: string;
+    subtitle: string;
+    'form-title': string;
+    items?:
+      | {
+          title: string;
+          contact: string;
+          message?: string | null;
+          icon: 'location' | 'phone' | 'mail' | 'hours';
+          id?: string | null;
+        }[]
+      | null;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?:
+          | T
+          | {
+              prefix?: T;
+              infix?: T;
+              suffix?: T;
+            };
+        subtitle?: T;
+        card?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              icon?: T;
+              id?: T;
+            };
+      };
+  about?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        mission?: T;
+        vision?: T;
+      };
+  'core-values'?:
+    | T
+    | {
+        title?: T;
+        values?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              icon?: T;
+              id?: T;
+            };
+      };
+  impact?:
+    | T
+    | {
+        title?: T;
+        stats?:
+          | T
+          | {
+              value?: T;
+              label?: T;
+              subtitle?: T;
+              icon?: T;
+              id?: T;
+            };
+      };
+  why?:
+    | T
+    | {
+        title?: T;
+        highlights?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  services?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              features?:
+                | T
+                | {
+                    value?: T;
+                    id?: T;
+                  };
+              icon?: T;
+              id?: T;
+            };
+      };
+  consultation?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  markets?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        items?:
+          | T
+          | {
+              country?: T;
+              population?: T;
+              'market-size'?: T;
+              opportunities?: T;
+              highlights?:
+                | T
+                | {
+                    value?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+      };
+  partnerships?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        items?:
+          | T
+          | {
+              value?: T;
+              label?: T;
+              id?: T;
+            };
+      };
+  contact?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        'form-title'?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              contact?: T;
+              message?: T;
+              icon?: T;
+              id?: T;
+            };
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
