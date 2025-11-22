@@ -16,9 +16,9 @@ export const HomePage: GlobalConfig = {
     read: () => true,
   },
   admin: {
-    preview: () => "http://localhost:3000?preview=true",
+    preview: () => "/?preview=true",
     livePreview: {
-      url: () => "http://localhost:3000?preview=true",
+      url: () => "/?preview=true",
     },
   },
   hooks: {},
