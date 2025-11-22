@@ -1,11 +1,16 @@
-"use client";
-
+import { getPayload } from "payload";
+import type { FunctionComponent } from "react";
+import config from "@/payload.config";
 import FooterBusinessHours from "./footer/FooterBusinessHours";
 import FooterCompanyInfo from "./footer/FooterCompanyInfo";
 import FooterContactUs from "./footer/FooterContactUs";
 import FooterQuickLinks from "./footer/FooterQuickLinks";
 
-const Footer = () => {
+const Footer: FunctionComponent = async () => {
+  const payload = await getPayload({ config });
+  const footer = await payload.findGlobal({
+    slug: "footer",
+  });
   const currentYear = new Date().getFullYear();
 
   return (
@@ -13,13 +18,20 @@ const Footer = () => {
       {/* Main Footer Content */}
       <div className="max-w-container mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-          <FooterCompanyInfo />
+          <FooterCompanyInfo
+            description={footer.description}
+            socials={footer.socials}
+          />
 
           <FooterQuickLinks />
 
-          <FooterContactUs />
+          <FooterContactUs
+            location={footer.location}
+            phone={footer.phone}
+            mail={footer.mail}
+          />
 
-          <FooterBusinessHours />
+          <FooterBusinessHours hours={footer.hours} />
         </div>
       </div>
 

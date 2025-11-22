@@ -88,9 +88,11 @@ export interface Config {
   };
   globals: {
     'home-page': HomePage;
+    footer: Footer;
   };
   globalsSelect: {
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
   user: User & {
@@ -449,6 +451,49 @@ export interface HomePage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  description: string;
+  location?:
+    | {
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  phone?:
+    | {
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  mail?:
+    | {
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  hours?:
+    | {
+        day: string;
+        time: string;
+        id?: string | null;
+      }[]
+    | null;
+  socials?:
+    | {
+        platform: 'linkedin' | 'twitter' | 'facebook';
+        link: string;
+        id?: string | null;
+      }[]
+    | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
@@ -594,6 +639,49 @@ export interface HomePageSelect<T extends boolean = true> {
               icon?: T;
               id?: T;
             };
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  description?: T;
+  location?:
+    | T
+    | {
+        value?: T;
+        id?: T;
+      };
+  phone?:
+    | T
+    | {
+        value?: T;
+        id?: T;
+      };
+  mail?:
+    | T
+    | {
+        value?: T;
+        id?: T;
+      };
+  hours?:
+    | T
+    | {
+        day?: T;
+        time?: T;
+        id?: T;
+      };
+  socials?:
+    | T
+    | {
+        platform?: T;
+        link?: T;
+        id?: T;
       };
   _status?: T;
   updatedAt?: T;

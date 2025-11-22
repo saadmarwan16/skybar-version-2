@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronRight } from "lucide-react";
 import type { FunctionComponent } from "react";
 import { footerQuickLinks } from "@/lib/footer";
@@ -17,7 +19,7 @@ const FooterQuickLinks: FunctionComponent = () => {
               onClick={() => scrollToSection(link.href)}
               className="font-body text-sm text-primary-foreground/80 hover:text-secondary transition-colors flex items-center gap-3"
             >
-              <ChevronRight className="h-4 w-4 flex-shrink-0" />
+              <ChevronRight className="h-4 w-4 shrink-0" />
               {link.name}
             </button>
           </li>

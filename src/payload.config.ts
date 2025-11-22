@@ -8,6 +8,7 @@ import { buildConfig } from "payload";
 import sharp from "sharp";
 import { Media } from "./collections/Media";
 import { Users } from "./collections/Users";
+import { Footer } from "./globals/Footer";
 import { HomePage } from "./globals/HomePage";
 
 const filename = fileURLToPath(import.meta.url);
@@ -43,7 +44,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media],
-  globals: [HomePage],
+  globals: [HomePage, Footer],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

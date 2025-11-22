@@ -1,33 +1,68 @@
+import { Mail, MapPin, Phone } from "lucide-react";
 import { Fragment, type FunctionComponent } from "react";
-import { footerContactUs } from "@/lib/footer";
+import type { Footer } from "@/payload-types";
 
-const FooterContactUs: FunctionComponent = () => {
+interface FooterContactUsProps {
+  location: Footer["location"];
+  phone: Footer["phone"];
+  mail: Footer["mail"];
+}
+
+const constructMailtoLink = (email: string) => {
+  return `mailto:${email}`;
+};
+
+const constructPhoneLink = (phone: string) => {
+  return `tel:${phone.replace(/\s+/g, "")}`;
+};
+
+const FooterContactUs: FunctionComponent<FooterContactUsProps> = ({
+  location,
+  phone,
+  mail,
+}) => {
   return (
     <div>
       <h4 className="font-heading text-lg font-semibold mb-4 text-secondary">
         Contact Us
       </h4>
       <div className="space-y-3">
-        {footerContactUs.map((item) => (
-          <div key={item.type} className="flex space-x-2">
-            <item.icon className="h-4 w-4 text-secondary flex-shrink-0 mt-1" />
-            <ul className="space-y-1">
-              {item.value.map((detail) => (
-                <Fragment key={detail.name}>
-                  {item.type === "address" ? (
-                    <li className="font-body text-sm text-primary-foreground/80">
-                      {detail.name}
-                    </li>
-                  ) : (
-                    <li className="font-body text-sm text-primary-foreground/80 hover:text-secondary transition-colors">
-                      <a href={detail.link}>{detail.name}</a>
-                    </li>
-                  )}
-                </Fragment>
-              ))}
-            </ul>
-          </div>
-        ))}
+        <div className="flex space-x-2">
+          <MapPin className="h-4 w-4 text-secondary shrink-0 mt-1" />
+          <ul className="space-y-1">
+            {location?.map((detail) => (
+              <Fragment key={detail.value}>
+                <li className="font-body text-sm text-primary-foreground/80">
+                  {detail.value}
+                </li>
+              </Fragment>
+            ))}
+          </ul>
+        </div>
+        <div className="flex space-x-2">
+          <Phone className="h-4 w-4 text-secondary shrink-0 mt-1" />
+          <ul className="space-y-1">
+            {phone?.map((detail) => (
+              <Fragment key={detail.value}>
+                <li className="font-body text-sm text-primary-foreground/80 hover:text-secondary transition-colors">
+                  <a href={constructPhoneLink(detail.value)}>{detail.value}</a>
+                </li>
+              </Fragment>
+            ))}
+          </ul>
+        </div>
+        <div className="flex space-x-2">
+          <Mail className="h-4 w-4 text-secondary shrink-0 mt-1" />
+          <ul className="space-y-1">
+            {mail?.map((detail) => (
+              <Fragment key={detail.value}>
+                <li className="font-body text-sm text-primary-foreground/80 hover:text-secondary transition-colors">
+                  <a href={constructMailtoLink(detail.value)}>{detail.value}</a>
+                </li>
+              </Fragment>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
