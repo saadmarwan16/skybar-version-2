@@ -1,4 +1,7 @@
+import { getPayload } from "payload";
 import type { FunctionComponent } from "react";
+import config from "@/payload.config";
+import { LivePreviewListener } from "../LivePreviewListener";
 import ProductsSuspense from "./components/ProductsSuspense";
 
 interface ProductsPageProps {
@@ -6,14 +9,22 @@ interface ProductsPageProps {
     search: string;
     category: string;
     country: string;
+    preview?: string;
   }>;
 }
 
 const Products: FunctionComponent<ProductsPageProps> = async (props) => {
-  const searchParams = await props.searchParams;
+  const { category, country, search, preview } = await props.searchParams;
+  const draft = !!preview;
+  const payload = await getPayload({ config });
+  const page = await payload.findGlobal({
+    slug: "products-page",
+    draft,
+  });
 
   return (
     <>
+      {draft && <LivePreviewListener />}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div
@@ -21,7 +32,7 @@ const Products: FunctionComponent<ProductsPageProps> = async (props) => {
           style={{ backgroundImage: `url(/products-hero-bg.jpg)` }}
         />
         {/* Background with gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary-dark/80 to-accent/80" />
+        <div className="absolute inset-0 bg-linear-to-br from-primary/80 via-primary-dark/80 to-accent/80" />
         <div className="absolute inset-0 bg-gradient-overlay opacity-60" />
 
         {/* Animated background patterns */}
@@ -35,15 +46,15 @@ const Products: FunctionComponent<ProductsPageProps> = async (props) => {
         <div className="relative z-10 max-w-container mx-auto px-6 text-center text-white">
           <div className="animate-fade-in">
             <h1 className="font-heading text-5xl md:text-7xl font-bold mb-6 leading-tight drop-shadow-lg">
-              Global Product
+              {page.title.prefix}
               <span className="text-secondary drop-shadow-[0_0_20px_rgba(212,175,55,0.5)] block">
-                Marketplace
+                {page.title.infix}
               </span>
+              {page.title.suffix && <>{page.title.suffix}</>}
             </h1>
 
             <p className="font-body text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed text-white/95 drop-shadow-md">
-              Discover premium industrial products and machinery from trusted
-              international suppliers
+              {page.subtitle}
             </p>
           </div>
         </div>
@@ -57,9 +68,11 @@ const Products: FunctionComponent<ProductsPageProps> = async (props) => {
       </section>
 
       <ProductsSuspense
-        search={searchParams.search}
-        category={searchParams.category}
-        country={searchParams.country}
+        search={search}
+        category={category}
+        country={country}
+        countries={page.countries}
+        categories={page.categories}
       />
     </>
   );

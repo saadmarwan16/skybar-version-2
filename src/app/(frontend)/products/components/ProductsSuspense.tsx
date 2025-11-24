@@ -1,6 +1,7 @@
 "use client";
 
 import { type FunctionComponent, useEffect, useMemo } from "react";
+import type { ProductsPage } from "@/payload-types";
 import { useProductsStore } from "@/store/useProductsStore";
 import ProductsDialog from "./ProductsDialog";
 import ProductsFilter from "./ProductsFilter";
@@ -10,17 +11,21 @@ type ProductsSuspenseProps = {
   search: string | undefined;
   category: string | undefined;
   country: string | undefined;
+  categories: ProductsPage["categories"];
+  countries: ProductsPage["countries"];
 };
 
 const ProductsSuspense: FunctionComponent<ProductsSuspenseProps> = ({
   search,
   category,
   country,
+  categories,
+  countries,
 }) => {
   const searchTerm = useMemo(() => search ?? "", [search]);
   const selectedCategory = useMemo(
     () => category ?? "All Categories",
-    [category],
+    [category]
   );
   const selectedCountry = useMemo(() => country ?? "All Countries", [country]);
 
@@ -40,6 +45,8 @@ const ProductsSuspense: FunctionComponent<ProductsSuspenseProps> = ({
         searchTerm={searchTerm}
         selectedCategory={selectedCategory}
         selectedCountry={selectedCountry}
+        categories={categories}
+        countries={countries}
       />
 
       <ProductsGrid />

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 interface NativeSelectProps {
   placeholder?: string;
-  options: Array<{ value: string; label: string }>;
+  options?: Array<{ value: string; label: string }>;
   value?: string;
   onChange?: (value: string) => void;
   className?: string;
@@ -16,13 +16,13 @@ interface NativeSelectProps {
 const NativeSelect = React.forwardRef<HTMLDivElement, NativeSelectProps>(
   (
     { className, placeholder, options, value, onChange, disabled, ...props },
-    ref,
+    ref
   ) => {
     const [isOpen, setIsOpen] = React.useState(false);
     const [selectedValue, setSelectedValue] = React.useState(value || "");
 
-    const selectedOption = options.find(
-      (option) => option.value === selectedValue,
+    const selectedOption = options?.find(
+      (option) => option.value === selectedValue
     );
 
     React.useEffect(() => {
@@ -44,7 +44,7 @@ const NativeSelect = React.forwardRef<HTMLDivElement, NativeSelectProps>(
             "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
             "disabled:cursor-not-allowed disabled:opacity-50",
             isOpen && "ring-1 ring-ring",
-            className,
+            className
           )}
           onClick={() => !disabled && setIsOpen(!isOpen)}
           onKeyDown={(e) => {
@@ -61,7 +61,7 @@ const NativeSelect = React.forwardRef<HTMLDivElement, NativeSelectProps>(
           <span
             className={cn(
               "truncate",
-              !selectedValue && "text-muted-foreground",
+              !selectedValue && "text-muted-foreground"
             )}
           >
             {selectedOption?.label || placeholder || "Select..."}
@@ -69,18 +69,18 @@ const NativeSelect = React.forwardRef<HTMLDivElement, NativeSelectProps>(
           <ChevronDown
             className={cn(
               "h-4 w-4 opacity-50 transition-transform duration-200",
-              isOpen && "rotate-180",
+              isOpen && "rotate-180"
             )}
           />
         </div>
 
         {isOpen && (
-          <div className="absolute top-full z-[9999] mt-1 w-full rounded-md border border-border bg-popover shadow-lg animate-in fade-in-0 zoom-in-95">
+          <div className="absolute top-full z-9999 mt-1 w-full rounded-md border border-border bg-popover shadow-lg animate-in fade-in-0 zoom-in-95">
             <div
               className="p-1 max-h-60 overflow-auto bg-background rounded-md"
               role="listbox"
             >
-              {options.map((option) => (
+              {options?.map((option) => (
                 <div
                   key={option.value}
                   className={cn(
@@ -88,7 +88,7 @@ const NativeSelect = React.forwardRef<HTMLDivElement, NativeSelectProps>(
                     "hover:bg-accent hover:text-accent-foreground",
                     "focus:bg-accent focus:text-accent-foreground focus:outline-none",
                     selectedValue === option.value &&
-                      "bg-accent text-accent-foreground",
+                      "bg-accent text-accent-foreground"
                   )}
                   onClick={() => handleSelect(option.value)}
                   onKeyDown={(e) => {
@@ -103,7 +103,7 @@ const NativeSelect = React.forwardRef<HTMLDivElement, NativeSelectProps>(
                 >
                   <span className="flex-1 truncate">{option.label}</span>
                   {selectedValue === option.value && (
-                    <Check className="h-4 w-4 ml-2 flex-shrink-0" />
+                    <Check className="h-4 w-4 ml-2 shrink-0" />
                   )}
                 </div>
               ))}
@@ -115,7 +115,7 @@ const NativeSelect = React.forwardRef<HTMLDivElement, NativeSelectProps>(
         {isOpen && (
           <button
             type="button"
-            className="fixed inset-0 z-[9998] cursor-default"
+            className="fixed inset-0 z-9998 cursor-default"
             onClick={() => setIsOpen(false)}
             onKeyDown={(e) => {
               if (e.key === "Escape") {
@@ -128,7 +128,7 @@ const NativeSelect = React.forwardRef<HTMLDivElement, NativeSelectProps>(
         )}
       </div>
     );
-  },
+  }
 );
 
 NativeSelect.displayName = "NativeSelect";
