@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { GenerateSearchParams } from "../usecases/GenerateSearchParams";
 
 export const useDebounce = (
+  preview: string | undefined,
   value: string,
   selectedCategory: string,
   selectedCountry: string,
@@ -15,6 +16,7 @@ export const useDebounce = (
     const id = setTimeout(() => {
       router.push(
         `/products?${new GenerateSearchParams().execute(
+          preview,
           value,
           selectedCategory,
           selectedCountry
@@ -28,7 +30,7 @@ export const useDebounce = (
     return () => {
       clearTimeout(id);
     };
-  }, [value, delay, selectedCategory, selectedCountry, router]);
+  }, [preview, value, delay, selectedCategory, selectedCountry, router]);
 
   return { debouncedValue, setDebouncedValue };
 };

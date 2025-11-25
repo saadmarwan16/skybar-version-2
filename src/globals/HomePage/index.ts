@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import { env } from "@/env";
 import { AboutField } from "./Fields/AboutField";
 import { ConsultationField } from "./Fields/ConsultationField";
 import { ContactField } from "./Fields/ContactField";
@@ -16,9 +17,9 @@ export const HomePage: GlobalConfig = {
     read: () => true,
   },
   admin: {
-    preview: () => "/?preview=true",
+    preview: () => `${env.NEXT_PUBLIC_URL}/?preview=true`,
     livePreview: {
-      url: () => "/?preview=true",
+      url: () => `${env.NEXT_PUBLIC_URL}/?preview=true`,
     },
   },
   hooks: {},

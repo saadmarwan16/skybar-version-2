@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import { env } from "@/env";
 
 export const ProductsPage: GlobalConfig = {
   slug: "products-page",
@@ -6,9 +7,9 @@ export const ProductsPage: GlobalConfig = {
     read: () => true,
   },
   admin: {
-    preview: () => "/products/?preview=true",
+    preview: () => `${env.NEXT_PUBLIC_URL}/products/?preview=true`,
     livePreview: {
-      url: () => "/products/?preview=true",
+      url: () => `${env.NEXT_PUBLIC_URL}/products/?preview=true`,
     },
   },
   hooks: {},

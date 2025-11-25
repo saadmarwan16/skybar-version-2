@@ -1,7 +1,9 @@
 "use client";
+
 import { RefreshRouteOnSave } from "@payloadcms/live-preview-react";
 import { useRouter } from "next/navigation.js";
 import type { FunctionComponent } from "react";
+import { env } from "@/env";
 
 export const LivePreviewListener: FunctionComponent = () => {
   const router = useRouter();
@@ -9,7 +11,7 @@ export const LivePreviewListener: FunctionComponent = () => {
   return (
     <RefreshRouteOnSave
       refresh={() => router.refresh()}
-      serverURL="http://localhost:3000"
+      serverURL={`${env.NEXT_PUBLIC_URL}`}
     />
   );
 };

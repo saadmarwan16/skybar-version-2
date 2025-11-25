@@ -8,6 +8,7 @@ import ProductsFilter from "./ProductsFilter";
 import ProductsGrid from "./ProductsGrid";
 
 type ProductsSuspenseProps = {
+  preview: string | undefined;
   search: string | undefined;
   category: string | undefined;
   country: string | undefined;
@@ -16,6 +17,7 @@ type ProductsSuspenseProps = {
 };
 
 const ProductsSuspense: FunctionComponent<ProductsSuspenseProps> = ({
+  preview,
   search,
   category,
   country,
@@ -42,6 +44,7 @@ const ProductsSuspense: FunctionComponent<ProductsSuspenseProps> = ({
   return (
     <>
       <ProductsFilter
+        preview={preview}
         searchTerm={searchTerm}
         selectedCategory={selectedCategory}
         selectedCountry={selectedCountry}

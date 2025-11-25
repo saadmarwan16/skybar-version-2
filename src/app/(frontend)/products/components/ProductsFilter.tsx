@@ -8,6 +8,7 @@ import { useDebounce } from "../hooks/useDebounce";
 import { GenerateSearchParams } from "../usecases/GenerateSearchParams";
 
 interface ProductsFilterProps {
+  preview: string | undefined;
   searchTerm: string;
   selectedCategory: string;
   selectedCountry: string;
@@ -16,6 +17,7 @@ interface ProductsFilterProps {
 }
 
 const ProductsFilter: FunctionComponent<ProductsFilterProps> = ({
+  preview,
   searchTerm,
   selectedCategory,
   selectedCountry,
@@ -24,7 +26,7 @@ const ProductsFilter: FunctionComponent<ProductsFilterProps> = ({
 }) => {
   const router = useRouter();
   const { debouncedValue: search, setDebouncedValue: updateSearch } =
-    useDebounce(searchTerm, selectedCategory, selectedCountry);
+    useDebounce(preview, searchTerm, selectedCategory, selectedCountry);
 
   return (
     <section className="relative bg-linear-to-r from-primary/5 via-secondary/5 to-primary/5 border-b border-border py-10">
@@ -39,6 +41,7 @@ const ProductsFilter: FunctionComponent<ProductsFilterProps> = ({
                 updateSearch(e.target.value);
                 router.push(
                   `/products?${new GenerateSearchParams().execute(
+                    preview,
                     e.target.value,
                     selectedCategory,
                     selectedCountry
@@ -64,6 +67,7 @@ const ProductsFilter: FunctionComponent<ProductsFilterProps> = ({
                 onChange={(value) =>
                   router.push(
                     `/products?${new GenerateSearchParams().execute(
+                      preview,
                       searchTerm,
                       value,
                       selectedCountry
@@ -100,6 +104,7 @@ const ProductsFilter: FunctionComponent<ProductsFilterProps> = ({
                 onChange={(value) =>
                   router.push(
                     `/products?${new GenerateSearchParams().execute(
+                      preview,
                       searchTerm,
                       selectedCategory,
                       value

@@ -10,6 +10,7 @@ import { Categories } from "./collections/Category";
 import { Countries } from "./collections/Country";
 import { Media } from "./collections/Media";
 import { Users } from "./collections/Users";
+import { env } from "./env";
 import { Footer } from "./globals/Footer";
 import { HomePage } from "./globals/HomePage";
 import { ProductsPage } from "./globals/ProductsPage";
@@ -49,13 +50,13 @@ export default buildConfig({
   collections: [Users, Media, Categories, Countries],
   globals: [HomePage, Footer, ProductsPage],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || "",
+  secret: env.PAYLOAD_SECRET,
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
   db: sqliteAdapter({
     client: {
-      url: process.env.DATABASE_URI || "",
+      url: env.DATABASE_URL,
     },
   }),
   sharp,

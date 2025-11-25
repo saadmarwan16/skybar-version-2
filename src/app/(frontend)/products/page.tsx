@@ -68,6 +68,7 @@ const Products: FunctionComponent<ProductsPageProps> = async (props) => {
       </section>
 
       <ProductsSuspense
+        preview={preview}
         search={search}
         category={category}
         country={country}
