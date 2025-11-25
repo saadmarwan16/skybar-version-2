@@ -1,15 +1,18 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { Menu, ShoppingCart, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/store/useCartStore";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const { toggleCart, getTotalItems } = useCartStore();
+  const totalItems = getTotalItems();
 
   const navItems = [
     { name: "Home", href: "#home" },
@@ -69,16 +72,46 @@ const Navigation = () => {
                 View Products
               </Button>
             </Link>
+            <button
+              type="button"
+              onClick={toggleCart}
+              className="relative p-2 text-primary hover:text-secondary transition-colors"
+            >
+              <ShoppingCart className="h-6 w-6" />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            type="button"
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 text-primary"
-          >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          {/* Mobile Menu Button & Cart */}
+          <div className="lg:hidden flex items-center gap-2">
+            <button
+              type="button"
+              onClick={toggleCart}
+              className="relative p-2 text-primary hover:text-secondary transition-colors"
+            >
+              <ShoppingCart className="h-6 w-6" />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 text-primary"
+            >
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}

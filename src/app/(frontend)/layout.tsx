@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat, Open_Sans } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
+import Cart from "@/components/Cart";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 
@@ -39,6 +40,7 @@ export default function RootLayout({
           <Navigation />
           {children}
           <Footer />
+          <Cart />
         </div>
         <Toaster />
       </body>
