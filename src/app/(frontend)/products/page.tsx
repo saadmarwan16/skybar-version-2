@@ -22,6 +22,14 @@ const Products: FunctionComponent<ProductsPageProps> = async (props) => {
     draft,
   });
 
+  // const products = await payload.find({
+  //   collection: "products",
+  //   limit: 2,
+  //   page: 3,
+  // });
+
+  // console.log("Fetched products:", products);
+
   return (
     <>
       {draft && <LivePreviewListener />}

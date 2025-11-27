@@ -9,6 +9,7 @@ import sharp from "sharp";
 import { Categories } from "./collections/Category";
 import { Countries } from "./collections/Country";
 import { Media } from "./collections/Media";
+import { Products } from "./collections/Products";
 import { Users } from "./collections/Users";
 import { env } from "./env";
 import { Footer } from "./globals/Footer";
@@ -47,7 +48,7 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Media, Categories, Countries],
+  collections: [Users, Media, Categories, Countries, Products],
   globals: [HomePage, Footer, ProductsPage],
   editor: lexicalEditor(),
   secret: env.PAYLOAD_SECRET,
