@@ -1,23 +1,11 @@
 import type { CollectionConfig } from "payload";
-import { env } from "@/env";
 
 export const Products: CollectionConfig = {
   slug: "products",
   access: {
     read: () => true,
   },
-  admin: {
-    preview: () => `${env.NEXT_PUBLIC_URL}/products/?preview=true`,
-    livePreview: {
-      url: () => `${env.NEXT_PUBLIC_URL}/products/?preview=true`,
-    },
-  },
   hooks: {},
-  //   versions: {
-  //     drafts: {
-  //       autosave: false,
-  //     },
-  //   },
   fields: [
     {
       name: "title",

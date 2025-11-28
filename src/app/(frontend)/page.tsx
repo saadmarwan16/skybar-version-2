@@ -4,7 +4,9 @@ import About from "@/components/About";
 import Contact from "@/components/Contact";
 import Countries from "@/components/Countries";
 import Hero from "@/components/Hero";
+import Partners from "@/components/Partners";
 import Services from "@/components/Services";
+import Team from "@/components/Team";
 import config from "@/payload.config";
 import { LivePreviewListener } from "./LivePreviewListener";
 
@@ -44,6 +46,14 @@ const HomePage: FunctionComponent<HomePageProps> = async ({ searchParams }) => {
 
         <section id="countries">
           <Countries markets={page.markets} partnerships={page.partnerships} />
+        </section>
+
+        <section id="team">
+          <Team />
+        </section>
+
+        <section id="partners">
+          <Partners />
         </section>
 
         <section id="contact">
