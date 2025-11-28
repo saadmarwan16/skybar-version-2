@@ -78,77 +78,84 @@ const Cart: FunctionComponent = () => {
               </p>
             </div>
           ) : (
-            items.map((item) => (
-              <div
-                key={item.product.id}
-                className="flex gap-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
-              >
-                {/* Product Image */}
-                <div className="relative w-20 h-20 shrink-0 rounded-md overflow-hidden">
-                  <Image
-                    src={item.product.images[0]}
-                    alt={item.product.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+            items.map((item) => {
+              const image = item.product.image;
 
-                {/* Product Details */}
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-sm text-gray-900 line-clamp-2 mb-1">
-                    {item.product.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-2">
-                    {item.product.price}
-                  </p>
+              return (
+                <div
+                  key={item.product.id}
+                  className="flex gap-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
+                >
+                  {/* Product Image */}
+                  <div className="relative w-20 h-20 shrink-0 rounded-md overflow-hidden">
+                    {typeof image === "object" && image?.url && (
+                      <Image
+                        src={image.url}
+                        alt={image.alt}
+                        fill
+                        className="object-cover"
+                      />
+                    )}
+                  </div>
 
-                  {/* Quantity Controls */}
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        updateQuantity(item.product.id, item.quantity - 1)
-                      }
-                      className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
-                    >
-                      <span className="text-gray-600">−</span>
-                    </button>
-                    <span className="text-sm font-medium text-gray-900 w-8 text-center">
-                      {item.quantity}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        updateQuantity(item.product.id, item.quantity + 1)
-                      }
-                      className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
-                    >
-                      <span className="text-gray-600">+</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => removeItem(item.product.id)}
-                      className="ml-auto text-red-500 hover:text-red-700 transition-colors"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
+                  {/* Product Details */}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-sm text-gray-900 line-clamp-2 mb-1">
+                      {item.product.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-2">
+                      ${item.product.price_range.min_price} - $
+                      {item.product.price_range.max_price}
+                    </p>
+
+                    {/* Quantity Controls */}
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          updateQuantity(item.product.id, item.quantity - 1)
+                        }
+                        className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
                       >
-                        <title>Remove item</title>
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                        />
-                      </svg>
-                    </button>
+                        <span className="text-gray-600">−</span>
+                      </button>
+                      <span className="text-sm font-medium text-gray-900 w-8 text-center">
+                        {item.quantity}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          updateQuantity(item.product.id, item.quantity + 1)
+                        }
+                        className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
+                      >
+                        <span className="text-gray-600">+</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeItem(item.product.id)}
+                        className="ml-auto text-red-500 hover:text-red-700 transition-colors"
+                      >
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <title>Remove item</title>
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
 

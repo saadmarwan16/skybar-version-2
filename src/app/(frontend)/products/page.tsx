@@ -3,6 +3,7 @@ import type { FunctionComponent } from "react";
 import config from "@/payload.config";
 import { LivePreviewListener } from "../LivePreviewListener";
 import ProductsSuspense from "./components/ProductsSuspense";
+import { FetchProducts } from "./usecases/FetchProducts";
 
 interface ProductsPageProps {
   searchParams: Promise<{
@@ -21,14 +22,14 @@ const Products: FunctionComponent<ProductsPageProps> = async (props) => {
     slug: "products-page",
     draft,
   });
-
-  // const products = await payload.find({
-  //   collection: "products",
-  //   limit: 2,
-  //   page: 3,
-  // });
-
-  // console.log("Fetched products:", products);
+  const products = await new FetchProducts().execute(
+    payload,
+    preview,
+    search,
+    category,
+    country
+  );
+  // console.log("Products Page Rendered with Products:", products);
 
   return (
     <>
@@ -82,6 +83,7 @@ const Products: FunctionComponent<ProductsPageProps> = async (props) => {
         country={country}
         countries={page.countries}
         categories={page.categories}
+        products={products}
       />
     </>
   );

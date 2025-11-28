@@ -1,7 +1,8 @@
 "use client";
 
+import type { PaginatedDocs } from "payload";
 import { type FunctionComponent, useEffect, useMemo } from "react";
-import type { ProductsPage } from "@/payload-types";
+import type { Product, ProductsPage } from "@/payload-types";
 import { useProductsStore } from "@/store/useProductsStore";
 import ProductsDialog from "./ProductsDialog";
 import ProductsFilter from "./ProductsFilter";
@@ -14,6 +15,7 @@ type ProductsSuspenseProps = {
   country: string | undefined;
   categories: ProductsPage["categories"];
   countries: ProductsPage["countries"];
+  products: PaginatedDocs<Product>;
 };
 
 const ProductsSuspense: FunctionComponent<ProductsSuspenseProps> = ({
@@ -23,6 +25,7 @@ const ProductsSuspense: FunctionComponent<ProductsSuspenseProps> = ({
   country,
   categories,
   countries,
+  products,
 }) => {
   const searchTerm = useMemo(() => search ?? "", [search]);
   const selectedCategory = useMemo(
@@ -31,15 +34,23 @@ const ProductsSuspense: FunctionComponent<ProductsSuspenseProps> = ({
   );
   const selectedCountry = useMemo(() => country ?? "All Countries", [country]);
 
-  const { updateResults } = useProductsStore();
+  const { initializeProducts, updateResults } = useProductsStore();
 
   useEffect(() => {
+    initializeProducts(products.docs);
     updateResults({
       search: searchTerm,
       category: selectedCategory,
       country: selectedCountry,
     });
-  }, [searchTerm, selectedCategory, selectedCountry, updateResults]);
+  }, [
+    searchTerm,
+    selectedCategory,
+    selectedCountry,
+    updateResults,
+    initializeProducts,
+    products.docs,
+  ]);
 
   return (
     <>

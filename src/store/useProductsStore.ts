@@ -1,38 +1,44 @@
 import { create } from "zustand";
-import { mockProducts } from "@/app/(frontend)/products/data";
+import type { Product } from "@/payload-types";
 
 interface IQuery {
   search: string;
   category: string;
   country: string;
+  products?: Product[];
 }
 
 interface ProductsState {
-  results: typeof mockProducts;
-  selectedProduct: (typeof mockProducts)[0] | null;
+  results: Product[];
+  initializeProducts: (products: Product[]) => void;
+  selectedProduct: Product | null;
   updateResults: (query: IQuery) => void;
-  updateSelectedProduct: (product: (typeof mockProducts)[0] | null) => void;
+  updateSelectedProduct: (product: Product | null) => void;
 }
 
-export const useProductsStore = create<ProductsState>((set) => ({
+export const useProductsStore = create<ProductsState>((set, get) => ({
   results: [],
+  resultss: [],
   selectedProduct: null,
-  updateResults: (query) => {
-    const filteredProducts = mockProducts.filter((product) => {
-      const matchesSearch =
-        product.title.toLowerCase().includes(query.search.toLowerCase()) ||
-        product.description.toLowerCase().includes(query.search.toLowerCase());
-      const matchesCategory =
-        query.category === "All Categories" ||
-        product.category === query.category;
-      const matchesCountry =
-        query.country === "All Countries" ||
-        product.exportFrom.includes(query.country);
+  initializeProducts: (products) => {
+    return set(() => ({ results: products }));
+  },
+  updateResults: (_query) => {
+    // const filteredProducts = mockProducts.filter((product) => {
+    //   const matchesSearch =
+    //     product.title.toLowerCase().includes(query.search.toLowerCase()) ||
+    //     product.description.toLowerCase().includes(query.search.toLowerCase());
+    //   const matchesCategory =
+    //     query.category === "All Categories" ||
+    //     product.category === query.category;
+    //   const matchesCountry =
+    //     query.country === "All Countries" ||
+    //     product.exportFrom.includes(query.country);
 
-      return matchesSearch && matchesCategory && matchesCountry;
-    });
+    //   return matchesSearch && matchesCategory && matchesCountry;
+    // });
 
-    return set(() => ({ results: filteredProducts }));
+    return set(() => ({ results: get().results }));
   },
   updateSelectedProduct: (product) => {
     return set(() => ({ selectedProduct: product }));

@@ -1,16 +1,16 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { mockProducts } from "@/app/(frontend)/products/data";
+import type { Product } from "@/payload-types";
 
 export type CartItem = {
-  product: (typeof mockProducts)[0];
+  product: Product;
   quantity: number;
 };
 
 interface CartState {
   items: CartItem[];
   isOpen: boolean;
-  addItem: (product: (typeof mockProducts)[0]) => void;
+  addItem: (product: Product) => void;
   removeItem: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
