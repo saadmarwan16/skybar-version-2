@@ -7,8 +7,24 @@ import type { Country } from "@/payload-types";
 import { useCartStore } from "@/store/useCartStore";
 import { useProductsStore } from "@/store/useProductsStore";
 
-const ProductsGrid: FunctionComponent = () => {
-  const { results: products, updateSelectedProduct } = useProductsStore();
+interface ProductsGridProps {
+  search?: string;
+  category?: string;
+  country?: string;
+}
+
+const ProductsGrid: FunctionComponent<ProductsGridProps> = ({
+  search,
+  category,
+  country,
+}) => {
+  const {
+    results: products,
+    updateSelectedProduct,
+    loadMore,
+    isLoadingMore,
+    hasMore,
+  } = useProductsStore();
   const { addItem } = useCartStore();
 
   const handleAddToCart = (
@@ -114,6 +130,52 @@ const ProductsGrid: FunctionComponent = () => {
             <p className="text-muted-foreground text-lg">
               No products found matching your criteria.
             </p>
+          </div>
+        )}
+
+        {/* Load More Button */}
+        {products.length > 0 && hasMore && (
+          <div className="flex justify-center mt-12">
+            <Button
+              onClick={() =>
+                loadMore({
+                  search,
+                  category,
+                  country,
+                })
+              }
+              disabled={isLoadingMore}
+              className="px-8 h-12 bg-gradient-primary hover:shadow-lg text-primary-foreground font-semibold text-base transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            >
+              {isLoadingMore ? (
+                <span className="flex items-center gap-2">
+                  <svg
+                    className="animate-spin h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <title>Loading</title>
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  Loading...
+                </span>
+              ) : (
+                "Load More"
+              )}
+            </Button>
           </div>
         )}
       </div>

@@ -16,10 +16,21 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/native-dialog";
+import type { Category, Country, Media } from "@/payload-types";
+import { useCartStore } from "@/store/useCartStore";
 import { useProductsStore } from "@/store/useProductsStore";
 
 const ProductsDialog: FunctionComponent = () => {
   const { selectedProduct, updateSelectedProduct } = useProductsStore();
+  const { addItem } = useCartStore();
+  const image = selectedProduct?.image as Media;
+
+  const handleAddToCart = () => {
+    if (selectedProduct) {
+      addItem(selectedProduct);
+      updateSelectedProduct(null);
+    }
+  };
 
   return (
     <Dialog
@@ -34,26 +45,28 @@ const ProductsDialog: FunctionComponent = () => {
                 {selectedProduct.title}
               </DialogTitle>
               <DialogDescription className="text-base text-muted-foreground">
-                {selectedProduct.category}
+                {(selectedProduct.categories as Category[]).map((category) => (
+                  <span key={category.value}>{category.value}</span>
+                ))}
               </DialogDescription>
             </DialogHeader>
 
             <div className="space-y-6 p-6">
               <Carousel className="w-full">
                 <CarouselContent>
-                  {selectedProduct.images.map((image) => (
-                    <CarouselItem key={image}>
-                      <div className="relative overflow-hidden rounded-lg">
+                  <CarouselItem key={image.alt}>
+                    <div className="relative overflow-hidden rounded-lg">
+                      {image.url && (
                         <Image
-                          src={image}
-                          alt={`${selectedProduct.title}`}
+                          src={image.url}
+                          alt={image.alt}
                           className="w-full h-80 object-cover"
                           width={320}
                           height={568}
                         />
-                      </div>
-                    </CarouselItem>
-                  ))}
+                      )}
+                    </div>
+                  </CarouselItem>
                 </CarouselContent>
                 <CarouselPrevious className="left-4" />
                 <CarouselNext className="right-4" />
@@ -74,7 +87,8 @@ const ProductsDialog: FunctionComponent = () => {
                     Price Range
                   </span>
                   <p className="text-2xl font-bold text-primary">
-                    {selectedProduct.price}
+                    ${selectedProduct.price_range.min_price} - $
+                    {selectedProduct.price_range.max_price}
                   </p>
                 </div>
                 <div>
@@ -82,7 +96,7 @@ const ProductsDialog: FunctionComponent = () => {
                     Minimum Order
                   </span>
                   <p className="text-2xl font-semibold text-foreground">
-                    {selectedProduct.minOrder}
+                    {selectedProduct.min_order}
                   </p>
                 </div>
               </div>
@@ -92,20 +106,23 @@ const ProductsDialog: FunctionComponent = () => {
                   Available for Export From
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {selectedProduct.exportFrom.map((country) => (
+                  {(selectedProduct.export_from as Country[]).map((country) => (
                     <Badge
-                      key={country}
+                      key={country.value}
                       variant="secondary"
                       className="text-sm font-medium px-4 py-2 bg-secondary/20 text-secondary-dark border border-secondary/30 hover:bg-secondary/30 transition-colors"
                     >
-                      {country}
+                      {country.value}
                     </Badge>
                   ))}
                 </div>
               </div>
 
-              <Button className="w-full h-14 bg-gradient-primary hover:shadow-lg text-primary-foreground font-semibold text-lg transition-all duration-300 hover:scale-[1.02]">
-                Import Product
+              <Button
+                onClick={handleAddToCart}
+                className="w-full h-14 bg-gradient-primary hover:shadow-lg text-primary-foreground font-semibold text-lg transition-all duration-300 hover:scale-[1.02]"
+              >
+                Add to Cart
               </Button>
             </div>
           </>

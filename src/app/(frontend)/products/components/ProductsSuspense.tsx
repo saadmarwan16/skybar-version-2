@@ -34,23 +34,11 @@ const ProductsSuspense: FunctionComponent<ProductsSuspenseProps> = ({
   );
   const selectedCountry = useMemo(() => country ?? "All Countries", [country]);
 
-  const { initializeProducts, updateResults } = useProductsStore();
+  const { initializeProducts } = useProductsStore();
 
   useEffect(() => {
-    initializeProducts(products.docs);
-    updateResults({
-      search: searchTerm,
-      category: selectedCategory,
-      country: selectedCountry,
-    });
-  }, [
-    searchTerm,
-    selectedCategory,
-    selectedCountry,
-    updateResults,
-    initializeProducts,
-    products.docs,
-  ]);
+    initializeProducts(products.docs, products.hasNextPage, 1);
+  }, [products.docs, products.hasNextPage, initializeProducts]);
 
   return (
     <>
@@ -63,7 +51,7 @@ const ProductsSuspense: FunctionComponent<ProductsSuspenseProps> = ({
         countries={countries}
       />
 
-      <ProductsGrid />
+      <ProductsGrid search={search} category={category} country={country} />
 
       <ProductsDialog />
     </>

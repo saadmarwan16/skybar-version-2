@@ -23,13 +23,11 @@ const Products: FunctionComponent<ProductsPageProps> = async (props) => {
     draft,
   });
   const products = await new FetchProducts().execute(
-    payload,
-    preview,
+    1,
     search,
     category,
     country
   );
-  // console.log("Products Page Rendered with Products:", products);
 
   return (
     <>

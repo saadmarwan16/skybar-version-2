@@ -1,17 +1,18 @@
-import type { BasePayload } from "payload";
+import { getPayload } from "payload";
+import config from "@/payload.config";
 
 export class FetchProducts {
   async execute(
-    payload: BasePayload,
-    _preview?: string,
+    page: number,
     search?: string,
     category?: string,
     country?: string
   ) {
+    const payload = await getPayload({ config });
     const products = await payload.find({
       collection: "products",
-      limit: 6,
-      page: 1,
+      limit: 2,
+      page: page,
       where: {
         title: {
           contains: search ?? "",

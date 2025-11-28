@@ -14,7 +14,7 @@ const Footer: FunctionComponent = async () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-primary text-primary-foreground">
+    <footer id="footer" className="bg-primary text-primary-foreground">
       {/* Main Footer Content */}
       <div className="max-w-container mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
