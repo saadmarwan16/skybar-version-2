@@ -80,17 +80,14 @@ const Contact: FunctionComponent<ContactProps> = ({ contact }) => {
                             <h4 className="font-heading text-lg font-semibold text-primary mb-2">
                               {info.title}
                             </h4>
-                            {/* {info.details.map((detail) => (
-                            <p
-                              key={detail}
-                              className="font-body text-muted-foreground text-sm leading-relaxed"
-                            >
-                              {detail}
-                            </p>
-                          ))} */}
-                            <p className="font-body text-muted-foreground text-sm leading-relaxed">
-                              {info.contact}
-                            </p>
+                            {info.contacts?.map(({ id, contact }) => (
+                              <p
+                                key={id}
+                                className="font-body text-muted-foreground text-sm leading-relaxed"
+                              >
+                                {contact}
+                              </p>
+                            ))}
                             {info.message && (
                               <p className="font-body text-muted-foreground text-sm leading-relaxed">
                                 {info.message}

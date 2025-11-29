@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Globe, Rocket, Ship, TrendingUp } from "lucide-react";
+import { ArrowRight, Rocket } from "lucide-react";
 import type { FunctionComponent } from "react";
 import { heroCardIcons } from "@/app/(frontend)/icons";
 import { Button } from "@/components/ui/button";

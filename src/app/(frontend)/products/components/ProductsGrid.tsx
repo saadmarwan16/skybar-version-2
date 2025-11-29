@@ -3,7 +3,7 @@ import { Fragment, type FunctionComponent } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import type { Country } from "@/payload-types";
+import type { Country, Media } from "@/payload-types";
 import { useCartStore } from "@/store/useCartStore";
 import { useProductsStore } from "@/store/useProductsStore";
 
@@ -40,7 +40,7 @@ const ProductsGrid: FunctionComponent<ProductsGridProps> = ({
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => {
-            const image = product.image;
+            const images = product.images as Media[];
 
             return (
               <Card
@@ -49,10 +49,10 @@ const ProductsGrid: FunctionComponent<ProductsGridProps> = ({
                 className="group hover:shadow-xl hover:-translate-y-2 transition-all gap-0 duration-300 border py-0 border-border hover:border-primary/30 bg-card overflow-hidden cursor-pointer"
               >
                 <div className="relative overflow-hidden">
-                  {typeof image === "object" && image?.url && (
+                  {images.length > 0 && images[0].url && (
                     <Image
-                      src={image.url}
-                      alt={image.alt}
+                      src={images[0].url}
+                      alt={images[0].alt}
                       width={370}
                       height={208}
                       className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"

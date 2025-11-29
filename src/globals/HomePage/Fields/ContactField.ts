@@ -31,9 +31,16 @@ export const ContactField: Field = {
           required: true,
         },
         {
-          name: "contact",
-          type: "text",
-          required: true,
+          name: "contacts",
+          type: "array",
+          minRows: 1,
+          fields: [
+            {
+              name: "contact",
+              type: "text",
+              required: true,
+            },
+          ],
         },
         {
           name: "message",

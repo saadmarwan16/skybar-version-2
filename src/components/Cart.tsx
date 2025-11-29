@@ -3,6 +3,7 @@
 import Image from "next/image";
 import type { FunctionComponent } from "react";
 import { Button } from "@/components/ui/button";
+import type { Media } from "@/payload-types";
 import { useCartStore } from "@/store/useCartStore";
 
 const Cart: FunctionComponent = () => {
@@ -79,7 +80,7 @@ const Cart: FunctionComponent = () => {
             </div>
           ) : (
             items.map((item) => {
-              const image = item.product.image;
+              const images = item.product.images as Media[];
 
               return (
                 <div
@@ -88,10 +89,10 @@ const Cart: FunctionComponent = () => {
                 >
                   {/* Product Image */}
                   <div className="relative w-20 h-20 shrink-0 rounded-md overflow-hidden">
-                    {typeof image === "object" && image?.url && (
+                    {images.length > 0 && images[0].url && (
                       <Image
-                        src={image.url}
-                        alt={image.alt}
+                        src={images[0].url}
+                        alt={images[0].alt}
                         fill
                         className="object-cover"
                       />

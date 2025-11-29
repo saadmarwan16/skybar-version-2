@@ -23,7 +23,7 @@ import { useProductsStore } from "@/store/useProductsStore";
 const ProductsDialog: FunctionComponent = () => {
   const { selectedProduct, updateSelectedProduct } = useProductsStore();
   const { addItem } = useCartStore();
-  const image = selectedProduct?.image as Media;
+  const images = selectedProduct?.images as Media[] | null | undefined;
 
   const handleAddToCart = () => {
     if (selectedProduct) {
@@ -54,19 +54,21 @@ const ProductsDialog: FunctionComponent = () => {
             <div className="space-y-6 p-6">
               <Carousel className="w-full">
                 <CarouselContent>
-                  <CarouselItem key={image.alt}>
-                    <div className="relative overflow-hidden rounded-lg">
-                      {image.url && (
-                        <Image
-                          src={image.url}
-                          alt={image.alt}
-                          className="w-full h-80 object-cover"
-                          width={320}
-                          height={568}
-                        />
-                      )}
-                    </div>
-                  </CarouselItem>
+                  {images?.map((image) => (
+                    <CarouselItem key={image.alt}>
+                      <div className="relative overflow-hidden rounded-lg">
+                        {image.url && (
+                          <Image
+                            src={image.url}
+                            alt={image.alt}
+                            className="w-full h-80 object-cover"
+                            width={320}
+                            height={568}
+                          />
+                        )}
+                      </div>
+                    </CarouselItem>
+                  ))}
                 </CarouselContent>
                 <CarouselPrevious className="left-4" />
                 <CarouselNext className="right-4" />

@@ -18,9 +18,10 @@ export const Products: CollectionConfig = {
       required: true,
     },
     {
-      name: "image",
+      name: "images",
       type: "upload",
       relationTo: "media",
+      hasMany: true,
     },
     {
       name: "min_order",

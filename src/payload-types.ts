@@ -200,7 +200,7 @@ export interface Product {
   id: number;
   title: string;
   description: string;
-  image?: (number | null) | Media;
+  images?: (number | Media)[] | null;
   min_order: number;
   price_range: {
     min_price: number;
@@ -362,7 +362,7 @@ export interface CountriesSelect<T extends boolean = true> {
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
-  image?: T;
+  images?: T;
   min_order?: T;
   price_range?:
     | T
@@ -564,7 +564,12 @@ export interface HomePage {
     items?:
       | {
           title: string;
-          contact: string;
+          contacts?:
+            | {
+                contact: string;
+                id?: string | null;
+              }[]
+            | null;
           message?: string | null;
           icon: 'location' | 'phone' | 'mail' | 'hours';
           id?: string | null;
@@ -817,7 +822,12 @@ export interface HomePageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              contact?: T;
+              contacts?:
+                | T
+                | {
+                    contact?: T;
+                    id?: T;
+                  };
               message?: T;
               icon?: T;
               id?: T;
