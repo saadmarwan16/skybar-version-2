@@ -582,9 +582,14 @@ export interface HomePage {
 export interface Footer {
   id: number;
   description: string;
-  location?:
+  locations?:
     | {
-        value: string;
+        location?:
+          | {
+              value: string;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -829,10 +834,15 @@ export interface HomePageSelect<T extends boolean = true> {
  */
 export interface FooterSelect<T extends boolean = true> {
   description?: T;
-  location?:
+  locations?:
     | T
     | {
-        value?: T;
+        location?:
+          | T
+          | {
+              value?: T;
+              id?: T;
+            };
         id?: T;
       };
   phone?:

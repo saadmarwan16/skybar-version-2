@@ -26,7 +26,7 @@ const Footer: FunctionComponent = async () => {
           <FooterQuickLinks />
 
           <FooterContactUs
-            location={footer.location}
+            locations={footer.locations}
             phone={footer.phone}
             mail={footer.mail}
           />

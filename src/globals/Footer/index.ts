@@ -13,13 +13,19 @@ export const Footer: GlobalConfig = {
       required: true,
     },
     {
-      name: "location",
+      name: "locations",
       type: "array",
       fields: [
         {
-          name: "value",
-          type: "text",
-          required: true,
+          name: "location",
+          type: "array",
+          fields: [
+            {
+              name: "value",
+              type: "text",
+              required: true,
+            },
+          ],
         },
       ],
     },
