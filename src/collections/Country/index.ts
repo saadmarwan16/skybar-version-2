@@ -9,11 +9,6 @@ export const Countries: CollectionConfig = {
     useAsTitle: "value",
   },
   hooks: {},
-  versions: {
-    drafts: {
-      autosave: false,
-    },
-  },
   fields: [
     {
       name: "value",

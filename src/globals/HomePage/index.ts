@@ -7,8 +7,10 @@ import { CoreValuesField } from "./Fields/CoreValueField";
 import { HeroField } from "./Fields/HeroField";
 import { ImpactField } from "./Fields/ImpactField";
 import { MarketsField } from "./Fields/MarketsField";
+import { PartnersField } from "./Fields/PartnersField";
 import { PartnershipsField } from "./Fields/PartnershipField";
 import { ServicesField } from "./Fields/ServicesField";
+import { TeamField } from "./Fields/TeamField";
 import { WhyField } from "./Fields/WhyField";
 
 export const HomePage: GlobalConfig = {
@@ -38,6 +40,8 @@ export const HomePage: GlobalConfig = {
     ConsultationField,
     MarketsField,
     PartnershipsField,
+    TeamField,
+    PartnersField,
     ContactField,
   ],
 };

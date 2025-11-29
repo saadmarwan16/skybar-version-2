@@ -5,7 +5,7 @@ import { AnimatedSection } from "@/hooks/useScrollAnimation";
 import type { HomePage } from "@/payload-types";
 
 interface CoreValuesProps {
-  values: HomePage["core-values"];
+  values: HomePage["core_values"];
 }
 
 const CoreValues: FunctionComponent<CoreValuesProps> = ({

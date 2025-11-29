@@ -15,7 +15,8 @@ export const ContactField: Field = {
       required: true,
     },
     {
-      name: "form-title",
+      name: "form_title",
+      label: "Form Title",
       type: "text",
       required: true,
     },

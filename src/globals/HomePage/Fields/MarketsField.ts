@@ -30,7 +30,8 @@ export const MarketsField: Field = {
           required: true,
         },
         {
-          name: "market-size",
+          name: "market_size",
+          label: "Market Size",
           type: "text",
           required: true,
         },

@@ -1,7 +1,8 @@
 import type { Field } from "payload";
 
 export const CoreValuesField: Field = {
-  name: "core-values",
+  name: "core_values",
+  label: "Core Values",
   type: "group",
   fields: [
     {

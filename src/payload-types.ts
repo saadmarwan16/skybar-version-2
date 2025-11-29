@@ -447,7 +447,7 @@ export interface HomePage {
     mission: string;
     vision: string;
   };
-  'core-values': {
+  core_values: {
     title: string;
     values?:
       | {
@@ -509,7 +509,7 @@ export interface HomePage {
       | {
           country: string;
           population: string;
-          'market-size': string;
+          market_size: string;
           opportunities: string;
           highlights?:
             | {
@@ -532,10 +532,21 @@ export interface HomePage {
         }[]
       | null;
   };
+  team: {
+    name: string;
+    role: string;
+    bio: string;
+    image?: (number | null) | Media;
+  };
+  partners: {
+    name: string;
+    link: string;
+    logo?: (number | null) | Media;
+  };
   contact: {
     title: string;
     subtitle: string;
-    'form-title': string;
+    form_title: string;
     items?:
       | {
           title: string;
@@ -644,7 +655,7 @@ export interface HomePageSelect<T extends boolean = true> {
         mission?: T;
         vision?: T;
       };
-  'core-values'?:
+  core_values?:
     | T
     | {
         title?: T;
@@ -719,7 +730,7 @@ export interface HomePageSelect<T extends boolean = true> {
           | {
               country?: T;
               population?: T;
-              'market-size'?: T;
+              market_size?: T;
               opportunities?: T;
               highlights?:
                 | T
@@ -743,12 +754,27 @@ export interface HomePageSelect<T extends boolean = true> {
               id?: T;
             };
       };
+  team?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        bio?: T;
+        image?: T;
+      };
+  partners?:
+    | T
+    | {
+        name?: T;
+        link?: T;
+        logo?: T;
+      };
   contact?:
     | T
     | {
         title?: T;
         subtitle?: T;
-        'form-title'?: T;
+        form_title?: T;
         items?:
           | T
           | {

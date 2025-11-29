@@ -38,7 +38,7 @@ const Contact: FunctionComponent<ContactProps> = ({ contact }) => {
                       <MessageSquare className="h-6 w-6 text-primary-foreground" />
                     </div>
                     <h3 className="font-heading text-2xl font-semibold text-primary">
-                      {contact["form-title"]}
+                      {contact.form_title}
                     </h3>
                   </div>
 

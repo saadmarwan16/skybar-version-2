@@ -1,23 +1,11 @@
 import type { GlobalConfig } from "payload";
-import { env } from "@/env";
 
 export const Footer: GlobalConfig = {
   slug: "footer",
   access: {
     read: () => true,
   },
-  admin: {
-    preview: () => `${env.NEXT_PUBLIC_URL}/?preview=true`,
-    livePreview: {
-      url: () => `${env.NEXT_PUBLIC_URL}/?preview=true`,
-    },
-  },
   hooks: {},
-  versions: {
-    drafts: {
-      autosave: false,
-    },
-  },
   fields: [
     {
       name: "description",

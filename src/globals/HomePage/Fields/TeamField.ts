@@ -1,0 +1,28 @@
+import type { Field } from "payload";
+
+export const TeamField: Field = {
+  name: "team",
+  type: "group",
+  fields: [
+    {
+      name: "name",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "role",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "bio",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "image",
+      type: "upload",
+      relationTo: "media",
+    },
+  ],
+};

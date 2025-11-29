@@ -34,7 +34,7 @@ const HomePage: FunctionComponent<HomePageProps> = async ({ searchParams }) => {
         <section id="about">
           <About
             about={page.about}
-            values={page["core-values"]}
+            values={page.core_values}
             stats={page.impact}
             why={page.why}
           />

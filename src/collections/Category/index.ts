@@ -9,11 +9,6 @@ export const Categories: CollectionConfig = {
     useAsTitle: "value",
   },
   hooks: {},
-  versions: {
-    drafts: {
-      autosave: false,
-    },
-  },
   fields: [
     {
       name: "value",

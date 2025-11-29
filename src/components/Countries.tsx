@@ -59,7 +59,7 @@ const Countries: FunctionComponent<CountriesProps> = ({
                     </Badge>
                     <Badge variant="outline" className="text-xs">
                       <TrendingUp className="h-3 w-3 mr-1" />
-                      {market["market-size"]}
+                      {market.market_size}
                     </Badge>
                   </div>
 

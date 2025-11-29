@@ -11,7 +11,7 @@ import WhyChooseUs from "./about/WhyChooseUs";
 
 interface AboutProps {
   about: HomePage["about"];
-  values: HomePage["core-values"];
+  values: HomePage["core_values"];
   stats: HomePage["impact"];
   why: HomePage["why"];
 }
