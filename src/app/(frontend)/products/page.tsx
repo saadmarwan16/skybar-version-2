@@ -1,9 +1,75 @@
+import type { Metadata } from "next";
 import { getPayload } from "payload";
 import type { FunctionComponent } from "react";
 import config from "@/payload.config";
 import { LivePreviewListener } from "../LivePreviewListener";
 import ProductsSuspense from "./components/ProductsSuspense";
 import { FetchProducts } from "./usecases/FetchProducts";
+
+export const metadata: Metadata = {
+  title:
+    "Premium Products | Skybar Dış Ticaret - Turkish Exports to East Africa",
+  description:
+    "Browse our extensive catalog of premium products available for export from Turkey to East Africa. Featuring agricultural machinery, construction materials, industrial equipment, energy solutions, and commercial equipment. Competitive prices, reliable shipping, and minimum order options for Kenya, Uganda, Tanzania, Rwanda, Burundi, and South Sudan.",
+  keywords: [
+    "Turkish export products",
+    "agricultural machinery Turkey",
+    "construction materials export",
+    "industrial equipment Turkey Africa",
+    "heavy machinery export",
+    "farming equipment Turkey",
+    "construction crane Turkey",
+    "solar panels Turkey Africa",
+    "commercial refrigeration export",
+    "precision milling machines",
+    "steel beams Turkey",
+    "energy equipment export",
+    "Turkish products catalog",
+    "buy Turkish machinery",
+    "export Turkey to Kenya",
+    "export Turkey to Uganda",
+    "export Turkey to Tanzania",
+    "Turkish industrial products",
+    "wholesale Turkish products",
+    "bulk order machinery Turkey",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  alternates: {
+    canonical: "https://skybardisticaret.com/products",
+  },
+  openGraph: {
+    title:
+      "Premium Products Catalog - Turkish Exports to East Africa | Skybar Dış Ticaret",
+    description:
+      "Discover quality Turkish products for export: agricultural machinery, construction materials, industrial equipment, and more. Competitive pricing with reliable shipping to East African markets.",
+    url: "https://skybardisticaret.com/products",
+    type: "website",
+    siteName: "Skybar Dış Ticaret",
+    locale: "en_US",
+    images: [
+      {
+        url: "navy-blue-logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Skybar Dış Ticaret Products Catalog - Turkish Exports",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Premium Products Catalog | Skybar Dış Ticaret",
+    description:
+      "Browse quality Turkish products available for export to East Africa. Agricultural machinery, construction materials, and industrial equipment.",
+    images: ["navy-blue-logo.png"],
+  },
+};
 
 interface ProductsPageProps {
   searchParams: Promise<{
