@@ -5,24 +5,40 @@ export const TeamField: Field = {
   type: "group",
   fields: [
     {
-      name: "name",
+      name: "title",
       type: "text",
       required: true,
     },
     {
-      name: "role",
+      name: "subtitle",
       type: "text",
       required: true,
     },
     {
-      name: "bio",
-      type: "text",
-      required: true,
-    },
-    {
-      name: "image",
-      type: "upload",
-      relationTo: "media",
+      name: "members",
+      type: "array",
+      fields: [
+        {
+          name: "name",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "role",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "bio",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+        },
+      ],
     },
   ],
 };

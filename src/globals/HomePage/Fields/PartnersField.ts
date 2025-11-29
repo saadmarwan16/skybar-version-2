@@ -5,19 +5,52 @@ export const PartnersField: Field = {
   type: "group",
   fields: [
     {
-      name: "name",
+      name: "title",
       type: "text",
       required: true,
     },
     {
-      name: "link",
+      name: "subtitle",
       type: "text",
       required: true,
     },
     {
-      name: "logo",
-      type: "upload",
-      relationTo: "media",
+      name: "partners",
+      type: "array",
+      fields: [
+        {
+          name: "name",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "link",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "logo",
+          type: "upload",
+          relationTo: "media",
+        },
+      ],
+    },
+    {
+      name: "cta",
+      label: "Call to Action",
+      type: "group",
+      fields: [
+        {
+          name: "title",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "subtitle",
+          type: "text",
+          required: true,
+        },
+      ],
     },
   ],
 };

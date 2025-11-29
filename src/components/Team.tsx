@@ -3,51 +3,48 @@
 import Image from "next/image";
 import type { FunctionComponent } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import type { HomePage, Media } from "@/payload-types";
 
-interface TeamMember {
-  name: string;
-  role: string;
-  image: string;
-  bio?: string;
-}
+// interface TeamMember {
+//   name: string;
+//   role: string;
+//   image: string;
+//   bio?: string;
+// }
 
 interface TeamProps {
-  title?: string;
-  subtitle?: string;
-  members?: TeamMember[];
+  value: HomePage["team"];
 }
 
-const defaultMembers: TeamMember[] = [
-  {
-    name: "John Smith",
-    role: "CEO & Founder",
-    image: "/team/member-1.jpg",
-    bio: "Leading international trade operations with 15+ years of experience",
-  },
-  {
-    name: "Sarah Johnson",
-    role: "Operations Director",
-    image: "/team/member-2.jpg",
-    bio: "Expert in logistics and supply chain management",
-  },
-  {
-    name: "Michael Chen",
-    role: "Business Development Manager",
-    image: "/team/member-3.jpg",
-    bio: "Specializing in East African market expansion",
-  },
-  {
-    name: "Emily Rodriguez",
-    role: "Customer Relations Lead",
-    image: "/team/member-4.jpg",
-    bio: "Dedicated to ensuring client satisfaction and success",
-  },
-];
+// const defaultMembers: TeamMember[] = [
+//   {
+//     name: "John Smith",
+//     role: "CEO & Founder",
+//     image: "/team/member-1.jpg",
+//     bio: "Leading international trade operations with 15+ years of experience",
+//   },
+//   {
+//     name: "Sarah Johnson",
+//     role: "Operations Director",
+//     image: "/team/member-2.jpg",
+//     bio: "Expert in logistics and supply chain management",
+//   },
+//   {
+//     name: "Michael Chen",
+//     role: "Business Development Manager",
+//     image: "/team/member-3.jpg",
+//     bio: "Specializing in East African market expansion",
+//   },
+//   {
+//     name: "Emily Rodriguez",
+//     role: "Customer Relations Lead",
+//     image: "/team/member-4.jpg",
+//     bio: "Dedicated to ensuring client satisfaction and success",
+//   },
+// ];
 
 const Team: FunctionComponent<TeamProps> = ({
-  title = "Meet Our Team",
-  subtitle = "Experienced professionals dedicated to your success",
-  members = defaultMembers,
+  value: { title, subtitle, members },
 }) => {
   return (
     <section className="py-20 bg-linear-to-b from-background to-muted/30">
@@ -64,44 +61,50 @@ const Team: FunctionComponent<TeamProps> = ({
 
         {/* Team Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {members.map((member) => (
-            <Card
-              key={member.name}
-              className="group hover:shadow-xl transition-all duration-300 overflow-hidden border border-border hover:border-primary/30"
-            >
-              <div className="relative overflow-hidden">
-                <div className="relative h-64 w-full bg-muted">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `/api/placeholder/400/320?text=${encodeURIComponent(
-                        member.name
-                      )}`;
-                    }}
-                  />
-                </div>
-                <div className="absolute inset-0 bg-linear-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
+          {members?.map((member) => {
+            const image = member.image as Media;
 
-              <CardContent className="p-6 text-center">
-                <h3 className="font-heading text-xl font-bold text-foreground mb-1">
-                  {member.name}
-                </h3>
-                <p className="text-sm font-semibold text-primary mb-3">
-                  {member.role}
-                </p>
-                {member.bio && (
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {member.bio}
+            return (
+              <Card
+                key={member.name}
+                className="group hover:shadow-xl transition-all duration-300 overflow-hidden border border-border hover:border-primary/30"
+              >
+                <div className="relative overflow-hidden">
+                  <div className="relative h-64 w-full bg-muted">
+                    {image.url && (
+                      <Image
+                        src={image.url}
+                        alt={image.alt}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = `/api/placeholder/400/320?text=${encodeURIComponent(
+                            image.alt
+                          )}`;
+                        }}
+                      />
+                    )}
+                  </div>
+                  <div className="absolute inset-0 bg-linear-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+
+                <CardContent className="p-6 text-center">
+                  <h3 className="font-heading text-xl font-bold text-foreground mb-1">
+                    {member.name}
+                  </h3>
+                  <p className="text-sm font-semibold text-primary mb-3">
+                    {member.role}
                   </p>
-                )}
-              </CardContent>
-            </Card>
-          ))}
+                  {member.bio && (
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {member.bio}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>

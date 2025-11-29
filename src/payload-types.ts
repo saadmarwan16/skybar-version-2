@@ -181,7 +181,6 @@ export interface Category {
   value: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -192,7 +191,6 @@ export interface Country {
   value: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -347,7 +345,6 @@ export interface CategoriesSelect<T extends boolean = true> {
   value?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -357,7 +354,6 @@ export interface CountriesSelect<T extends boolean = true> {
   value?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -533,15 +529,33 @@ export interface HomePage {
       | null;
   };
   team: {
-    name: string;
-    role: string;
-    bio: string;
-    image?: (number | null) | Media;
+    title: string;
+    subtitle: string;
+    members?:
+      | {
+          name: string;
+          role: string;
+          bio: string;
+          image?: (number | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
   };
   partners: {
-    name: string;
-    link: string;
-    logo?: (number | null) | Media;
+    title: string;
+    subtitle: string;
+    partners?:
+      | {
+          name: string;
+          link: string;
+          logo?: (number | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+    cta: {
+      title: string;
+      subtitle: string;
+    };
   };
   contact: {
     title: string;
@@ -600,7 +614,6 @@ export interface Footer {
         id?: string | null;
       }[]
     | null;
-  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -757,17 +770,37 @@ export interface HomePageSelect<T extends boolean = true> {
   team?:
     | T
     | {
-        name?: T;
-        role?: T;
-        bio?: T;
-        image?: T;
+        title?: T;
+        subtitle?: T;
+        members?:
+          | T
+          | {
+              name?: T;
+              role?: T;
+              bio?: T;
+              image?: T;
+              id?: T;
+            };
       };
   partners?:
     | T
     | {
-        name?: T;
-        link?: T;
-        logo?: T;
+        title?: T;
+        subtitle?: T;
+        partners?:
+          | T
+          | {
+              name?: T;
+              link?: T;
+              logo?: T;
+              id?: T;
+            };
+        cta?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+            };
       };
   contact?:
     | T
@@ -828,7 +861,6 @@ export interface FooterSelect<T extends boolean = true> {
         link?: T;
         id?: T;
       };
-  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -49,11 +49,11 @@ const HomePage: FunctionComponent<HomePageProps> = async ({ searchParams }) => {
         </section>
 
         <section id="team">
-          <Team />
+          <Team value={page.team} />
         </section>
 
         <section id="partners">
-          <Partners />
+          <Partners value={page.partners} />
         </section>
 
         <section id="contact">

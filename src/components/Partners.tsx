@@ -1,57 +1,55 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import type { FunctionComponent } from "react";
+import type { HomePage, Media } from "@/payload-types";
 
-interface Partner {
-  name: string;
-  logo: string;
-  description?: string;
-}
+// interface Partner {
+//   name: string;
+//   logo: string;
+//   description?: string;
+// }
 
 interface PartnersProps {
-  title?: string;
-  subtitle?: string;
-  partners?: Partner[];
+  value: HomePage["partners"];
 }
 
-const defaultPartners: Partner[] = [
-  {
-    name: "Global Trade Corporation",
-    logo: "/partners/partner-1.png",
-    description: "Leading international trade partner",
-  },
-  {
-    name: "African Logistics Co.",
-    logo: "/partners/partner-2.png",
-    description: "Premier logistics solutions provider",
-  },
-  {
-    name: "Turkish Manufacturing Group",
-    logo: "/partners/partner-3.png",
-    description: "Quality manufacturing partner",
-  },
-  {
-    name: "East African Distributors",
-    logo: "/partners/partner-4.png",
-    description: "Regional distribution network",
-  },
-  {
-    name: "International Shipping Ltd.",
-    logo: "/partners/partner-5.png",
-    description: "Reliable shipping services",
-  },
-  {
-    name: "Trade Finance Bank",
-    logo: "/partners/partner-6.png",
-    description: "Financial solutions partner",
-  },
-];
+// const defaultPartners: Partner[] = [
+//   {
+//     name: "Global Trade Corporation",
+//     logo: "/partners/partner-1.png",
+//     description: "Leading international trade partner",
+//   },
+//   {
+//     name: "African Logistics Co.",
+//     logo: "/partners/partner-2.png",
+//     description: "Premier logistics solutions provider",
+//   },
+//   {
+//     name: "Turkish Manufacturing Group",
+//     logo: "/partners/partner-3.png",
+//     description: "Quality manufacturing partner",
+//   },
+//   {
+//     name: "East African Distributors",
+//     logo: "/partners/partner-4.png",
+//     description: "Regional distribution network",
+//   },
+//   {
+//     name: "International Shipping Ltd.",
+//     logo: "/partners/partner-5.png",
+//     description: "Reliable shipping services",
+//   },
+//   {
+//     name: "Trade Finance Bank",
+//     logo: "/partners/partner-6.png",
+//     description: "Financial solutions partner",
+//   },
+// ];
 
 const Partners: FunctionComponent<PartnersProps> = ({
-  title = "Our Trusted Partners",
-  subtitle = "Working with industry leaders to deliver excellence",
-  partners = defaultPartners,
+  value: { title, subtitle, partners, cta },
 }) => {
   return (
     <section className="py-20 bg-background">
@@ -68,43 +66,49 @@ const Partners: FunctionComponent<PartnersProps> = ({
 
         {/* Partners Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-          {partners.map((partner) => (
-            <div
-              key={partner.name}
-              className="group flex flex-col items-center justify-center p-6 bg-card border border-border rounded-lg hover:border-primary/30 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-            >
-              <div className="relative w-full h-20 mb-4 flex items-center justify-center">
-                <div className="relative w-full h-full">
-                  <Image
-                    src={partner.logo}
-                    alt={partner.name}
-                    fill
-                    className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `/api/placeholder/200/80?text=${encodeURIComponent(
-                        partner.name
-                      )}`;
-                    }}
-                  />
+          {partners?.map((partner) => {
+            const logo = partner.logo as Media;
+
+            return (
+              <Link
+                key={partner.name}
+                href={partner.link}
+                className="group flex flex-col items-center justify-center p-6 bg-card border border-border rounded-lg hover:border-primary/30 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="relative w-full h-20 mb-4 flex items-center justify-center">
+                  <div className="relative w-full h-full">
+                    {logo.url && (
+                      <Image
+                        src={logo.url}
+                        alt={logo.alt}
+                        fill
+                        className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = `/api/placeholder/200/80?text=${encodeURIComponent(
+                            logo.alt
+                          )}`;
+                        }}
+                      />
+                    )}
+                  </div>
                 </div>
-              </div>
-              <p className="text-xs text-center text-muted-foreground group-hover:text-foreground transition-colors font-medium">
-                {partner.name}
-              </p>
-            </div>
-          ))}
+                <p className="text-xs text-center text-muted-foreground group-hover:text-foreground transition-colors font-medium">
+                  {partner.name}
+                </p>
+              </Link>
+            );
+          })}
         </div>
 
         {/* Call to Action */}
         <div className="mt-16 text-center">
           <div className="inline-block p-8 bg-linear-to-br from-primary/5 to-secondary/5 rounded-xl border border-primary/20">
             <h3 className="font-heading text-2xl font-bold text-foreground mb-3">
-              Interested in Partnership?
+              {cta.title}
             </h3>
             <p className="text-muted-foreground mb-6 max-w-lg">
-              Join our network of trusted partners and grow your business with
-              us
+              {cta.subtitle}
             </p>
             <a
               href="#contact"
@@ -120,3 +124,6 @@ const Partners: FunctionComponent<PartnersProps> = ({
 };
 
 export default Partners;
+
+// Interested in Partnership?
+// Join our network of trusted partners and grow your business with us
