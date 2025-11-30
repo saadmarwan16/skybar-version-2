@@ -1,14 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import type { FunctionComponent } from "react";
+import { type FunctionComponent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { Media } from "@/payload-types";
 import { useCartStore } from "@/store/useCartStore";
+import QuoteRequestDialog from "./QuoteRequestDialog";
 
 const Cart: FunctionComponent = () => {
   const { items, isOpen, toggleCart, removeItem, updateQuantity, clearCart } =
     useCartStore();
+  const [isQuoteDialogOpen, setIsQuoteDialogOpen] = useState(false);
 
   return (
     <>
@@ -89,10 +91,17 @@ const Cart: FunctionComponent = () => {
                 >
                   {/* Product Image */}
                   <div className="relative w-20 h-20 shrink-0 rounded-md overflow-hidden">
-                    {images.length > 0 && images[0].url && (
+                    {images?.length > 0 && images[0]?.url ? (
                       <Image
-                        src={images[0].url}
+                        src={images[0]?.url}
                         alt={images[0].alt}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <Image
+                        src="/no-product-image.png"
+                        alt="No product image"
                         fill
                         className="object-cover"
                       />
@@ -170,12 +179,22 @@ const Cart: FunctionComponent = () => {
             >
               Clear Cart
             </Button>
-            <Button className="w-full h-12 bg-gradient-primary hover:shadow-lg text-primary-foreground font-semibold">
+            <Button
+              onClick={() => setIsQuoteDialogOpen(true)}
+              className="w-full h-12 bg-gradient-primary hover:shadow-lg text-primary-foreground font-semibold"
+            >
               Request Quote
             </Button>
           </div>
         )}
       </div>
+
+      {/* Quote Request Dialog */}
+      <QuoteRequestDialog
+        isOpen={isQuoteDialogOpen}
+        onClose={() => setIsQuoteDialogOpen(false)}
+        cartItems={items}
+      />
     </>
   );
 };

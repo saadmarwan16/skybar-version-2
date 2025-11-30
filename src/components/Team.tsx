@@ -62,7 +62,7 @@ const Team: FunctionComponent<TeamProps> = ({
         {/* Team Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {members?.map((member) => {
-            const image = member.image as Media;
+            const image = member.image as Media | null | undefined;
 
             return (
               <Card
@@ -71,20 +71,12 @@ const Team: FunctionComponent<TeamProps> = ({
               >
                 <div className="relative overflow-hidden">
                   <div className="relative h-64 w-full bg-muted">
-                    {image.url && (
-                      <Image
-                        src={image.url}
-                        alt={image.alt}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = `/api/placeholder/400/320?text=${encodeURIComponent(
-                            image.alt
-                          )}`;
-                        }}
-                      />
-                    )}
+                    <Image
+                      src={image?.url || "/no-image-user.webp"}
+                      alt={image?.alt || "No image available"}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
                   </div>
                   <div className="absolute inset-0 bg-linear-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>

@@ -57,9 +57,9 @@ const ProductsDialog: FunctionComponent = () => {
                   {images?.map((image) => (
                     <CarouselItem key={image.alt}>
                       <div className="relative overflow-hidden rounded-lg">
-                        {image.url && (
+                        {image?.url && (
                           <Image
-                            src={image.url}
+                            src={image?.url}
                             alt={image.alt}
                             className="w-full h-80 object-cover"
                             width={320}

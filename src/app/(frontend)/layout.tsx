@@ -39,7 +39,7 @@ export default function RootLayout({
         <div className="min-h-screen">
           <Navigation />
           {children}
-          {/* <Footer /> */}
+          <Footer />
           <Cart />
         </div>
         <Toaster />

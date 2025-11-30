@@ -67,7 +67,7 @@ const Partners: FunctionComponent<PartnersProps> = ({
         {/* Partners Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
           {partners?.map((partner) => {
-            const logo = partner.logo as Media;
+            const logo = partner.logo as Media | null | undefined;
 
             return (
               <Link
@@ -77,20 +77,12 @@ const Partners: FunctionComponent<PartnersProps> = ({
               >
                 <div className="relative w-full h-20 mb-4 flex items-center justify-center">
                   <div className="relative w-full h-full">
-                    {logo.url && (
-                      <Image
-                        src={logo.url}
-                        alt={logo.alt}
-                        fill
-                        className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = `/api/placeholder/200/80?text=${encodeURIComponent(
-                            logo.alt
-                          )}`;
-                        }}
-                      />
-                    )}
+                    <Image
+                      src={logo?.url || "/no-logo.png"}
+                      alt={logo?.alt || "No logo image available"}
+                      fill
+                      className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                    />
                   </div>
                 </div>
                 <p className="text-xs text-center text-muted-foreground group-hover:text-foreground transition-colors font-medium">

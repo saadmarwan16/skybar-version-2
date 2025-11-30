@@ -49,10 +49,18 @@ const ProductsGrid: FunctionComponent<ProductsGridProps> = ({
                 className="group hover:shadow-xl hover:-translate-y-2 transition-all gap-0 duration-300 border py-0 border-border hover:border-primary/30 bg-card overflow-hidden cursor-pointer"
               >
                 <div className="relative overflow-hidden">
-                  {images.length > 0 && images[0].url && (
+                  {images?.length > 0 && images[0]?.url ? (
                     <Image
-                      src={images[0].url}
+                      src={images[0]?.url}
                       alt={images[0].alt}
+                      width={370}
+                      height={208}
+                      className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  ) : (
+                    <Image
+                      src="/no-product-image.png"
+                      alt="No product image"
                       width={370}
                       height={208}
                       className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
